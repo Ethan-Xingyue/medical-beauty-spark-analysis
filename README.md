@@ -4,14 +4,18 @@
 
 本系统对医美项目销售数据进行**采集与预处理**、**存储**、**聚类与趋势分析**及**可视化展示**，为医美平台提供数据支撑。数据来源为包含平台、城市、机构、项目品类、价格、销量、评价等维度的 CSV 表格。
 
+采用 **数据仓库分层思想**（ODS → DWD → DWS → ADS）：以 K-Means 聚类结果为 DWD+ 层数据产物，再派生 **8 张主题宽表** 形成 DWS 层，使用 Spark SQL 的 CTE / 窗口函数 / 多表 JOIN / 多条件 CASE WHEN 等构造复杂业务语义分析，最终聚合成 JSON 供看板读取。
+
+> 本次迭代的完整改动记录见 [`CHANGELOG.md`](./CHANGELOG.md)（含列名中英对照、8 张聚类派生表的 Spark SQL 技术点、前后端全部改动点）。
+
 ## 功能模块
 
 | 模块 | 说明 |
 |------|------|
-| 数据采集与预处理 | 使用 **pandas** 读取 CSV（支持 UTF-8/GBK），去重、缺失值填充、异常值处理（IQR），日期异常（如 `########`）置空，输出 Parquet（避免 Windows 下 PySpark Python worker 超时） |
-| 数据存储 | 对 Parquet/HDFS 数据做一致性检查并输出元信息 |
-| 数据分析 | **Spark** 读取 Parquet，K-Means 聚类与按城市/品类/渠道的趋势统计（输出 JSON 快照） |
-| 数据可视化 | Flask Web **系统**（**注册/登录**），左侧导航多页面：数据概览、地区/品类/渠道分析（**图+表+导出 CSV+刷新**）、聚类分析、关于系统；ECharts + JSON 用户文件 |
+| 数据采集与预处理 | 使用 **pandas** 读取 CSV（UTF-8 英文列名，兼容 GBK 自动回退），去重、缺失值填充、异常值处理（IQR），日期异常（如 `########`）置空；由采集日期派生 `stats_month`；输出 Parquet |
+| 数据存储 | 对 Parquet/HDFS 数据做一致性检查并输出元信息（行数、列数、缺失列、可用月份分布等） |
+| 数据分析 | **Spark** 读取 Parquet：① K-Means 聚类（VectorAssembler + StandardScaler + KMeans，K=3）；② 多维 Spark SQL 趋势统计；③ **基于聚类结果派生 8 张主题宽表**（`cluster_profile` / `cluster_city_rank` / `cluster_category_preference` / `cluster_channel_efficiency` / `cluster_price_band` / `cluster_top_projects` / `cluster_doctor_matching` / `cluster_month_delta`） |
+| 数据可视化 | Flask Web **系统**（**注册/登录/个人中心/头像上传**），左侧导航 9 个页面：数据概览、地区分析、销售趋势、地区偏好、品类分析、价格与折扣、渠道分析、聚类分析、**聚类深度分析**（画像卡片 + 热力图 + 堆叠柱 + 月度环比折线）、关于系统；ECharts + JSON 快照 |
 
 ## 环境要求
 
@@ -167,7 +171,14 @@ docker exec hdfs-namenode hdfs dfs -ls /user/medical_beauty/raw
 python run_all.py
 ```
 
-将依次执行：预处理 → 存储检查→ 分析。若 CSV 为 GBK 编码，程序会自动尝试 UTF-8/GBK/GB18030 解码。
+将依次执行 4 步：
+
+1. **数据采集与预处理** —— pandas 清洗 CSV → `output/clean_data.parquet`
+2. **存储检查** —— Parquet/HDFS 一致性校验（列齐全 / 月份分布）
+3. **K-Means 聚类 + Spark SQL 趋势统计** —— 生成 `output/clustered_data.parquet`、`output/cluster_centers.json`、`output/trend_stats.json`
+4. **聚类数据仓库派生** —— 基于聚类结果生成 8 张主题宽表到 `output/cluster_tables/*.parquet`，聚合到 `output/cluster_insights.json`
+
+若 CSV 为 GBK 编码，预处理会自动尝试 UTF-8/GBK/GB18030 解码。
 
 ### 4. 启动可视化看板
 
@@ -181,48 +192,92 @@ python -m src.visualize
 - **个人中心**（`/profile`）：修改**昵称**、**邮箱**、**上传头像**（PNG/JPG/GIF/WEBP，≤2MB）；**注册用户**可在此**修改密码**，内置管理员密码仍在 `config` / 环境变量中配置。
 
 - **默认管理员**：用户名 `admin`，密码 `admin123`（`config.py` 或环境变量 `DASHBOARD_USER` / `DASHBOARD_PASS`）。保留名 `admin`、`root` 及管理员用户名不可被注册占用。
-- **看板功能**：左侧切换「数据概览 / 地区分析 / 品类分析 / 渠道分析 / 聚类分析 / 关于系统」；各分析页含图表、数据表与按钮（刷新、导出 CSV、地区页可切换 TOP15/全部）。
+- **看板功能**：左侧切换「数据概览 / 地区分析 / 销售趋势 / 地区偏好 / 品类分析 / 价格与折扣 / 渠道分析 / 聚类分析 / **聚类深度分析** / 关于系统」。各分析页含图表、数据表与按钮（刷新、导出 CSV、地区页可切换 TOP15/全部）。**聚类深度分析**页展示基于聚类结果派生的主题宽表：聚类画像卡片（带业务标签 高端精品型/大众爆款型/长尾引流型/中端主力型）+ 6 张图（聚类×城市堆叠柱、品类偏好度热力图、折扣分桶堆叠柱、月度销量折线、渠道加权销量、医生头衔分布）+ 4 张数据表 + 5 个 CSV 导出。
+- **API 端点**：
+  - `GET /api/analytics?month=YYYY-MM` —— 主趋势统计，支持按月筛选
+  - `GET /api/cluster` —— 聚类中心（标准化特征空间）
+  - `GET /api/cluster_insights` —— 8 张聚类主题宽表的聚合结果 + 元信息
 - **会话密钥**：生产环境请设置 `FLASK_SECRET_KEY`。
-- 未登录访问 `/` 或 `/api/trend` 会跳转登录或返回 401。
+- 未登录访问 `/` 或 `/api/*` 会跳转登录或返回 401。
 
 ### 5. 单独运行各模块
 
 - 仅预处理：`python -m src.preprocess`
 - 仅存储检查（需先有 `output/clean_data.parquet` 或 HDFS 对应路径）：`python -m src.storage`
-- 仅分析：`python -m src.analysis`
+- 完整分析（聚类 + 趋势 + 聚类仓库派生）：`python -m src.analysis`
+- **仅跑聚类仓库派生**（前提：`output/clustered_data.parquet` 已存在）：
+  ```bash
+  python -c "from src.analysis import run_cluster_warehouse; print(run_cluster_warehouse())"
+  ```
 - 仅启动看板：`python -m src.visualize`
+- K 值选择辅助（肘部法则曲线）：`python -m src.elbow_plot`
 
 ## 配置说明
 
-- `project/src/config.py`：数据路径、Parquet 路径、JSON 用户文件路径、CSV 编码（`CSV_ENCODING`）、聚类数 K（`KMEANS_K`）、看板登录账号与 `SECRET_KEY` 等。
-- 若 CSV 乱码，可将 `CSV_ENCODING` 改为 `gbk` 或 `gb18030`；也可不设置，由程序自动尝试。
+- `src/config.py`：
+  - 数据路径（`RAW_CSV = data/medical_beauty_data.csv`）、Parquet 路径、JSON 用户文件路径
+  - CSV 编码（`CSV_ENCODING = "utf-8"`，若源文件是 GBK 可改为 `gbk` / `gb18030` 或留空由程序自动试）
+  - 聚类数 K（`KMEANS_K = 3`）
+  - 看板登录账号与 `SECRET_KEY`
+  - 列名常量（英文，`COL_PLATFORM` / `COL_CITY` / ...，对应 CSV 列头，与 CSV 数据文件中英对照见上表）
+- HDFS 切换通过环境变量 `USE_HDFS=1` 启用
 
 ## 目录结构
 
 ```
-project/
-  data/               # 原始 CSV
-  doc/                # 项目说明、数据库设计说明
-  src/
-    config.py         # 配置与列名
-    preprocess.py     # 预处理
-    storage.py        # 存储检查（Parquet/HDFS）
-    analysis.py       # 聚类与趋势分析
-    visualize.py      # Web 服务（注册登录 + 多页看板）
-    dashboard_auth.py # 看板用户注册/校验
-    templates/        # login.html、register.html、dashboard.html
-    static/           # css、js、img/default_avatar.svg、uploads/avatars/（用户头像）
-  output/             # 本地模式下的清洗后 Parquet、聚类结果、趋势 JSON（运行后生成）
-  database/           # 看板用户 JSON（运行后生成）
-  run_all.py          # 一键运行预处理+存储+分析
+medical-beauty-spark-analysis/
+├── data/                        # 原始 CSV
+│   └── medical_beauty_data.csv  # UTF-8，英文列名
+├── doc/                         # 项目说明
+│   └── 项目说明.md              # 含数据仓库分层设计 + 8 张聚类派生表对照
+├── src/
+│   ├── __init__.py
+│   ├── config.py                # 配置、英文列名常量、HDFS 切换
+│   ├── preprocess.py            # pandas 清洗 → clean_data.parquet
+│   ├── storage.py               # Parquet/HDFS 一致性检查
+│   ├── analysis.py              # 聚类 + 趋势统计 + 聚类仓库派生（8 张主题表）
+│   ├── visualize.py             # Flask Web 服务
+│   ├── dashboard_auth.py        # 看板用户注册/校验（JSON 持久化）
+│   ├── hdfs_io.py               # pyarrow HadoopFileSystem 读写
+│   ├── elbow_plot.py            # 肘部法则辅助脚本（手动选 K）
+│   ├── templates/               # login.html、register.html、profile.html、dashboard.html
+│   └── static/
+│       ├── css/dashboard_app.css
+│       ├── js/dashboard_app.js
+│       ├── img/default_avatar.svg
+│       └── uploads/avatars/     # 用户头像（运行时生成）
+├── output/                      # 运行后生成
+│   ├── clean_data.parquet       # 预处理产物
+│   ├── clustered_data.parquet   # 带聚类标签的明细
+│   ├── cluster_centers.json     # 聚类中心（标准化空间）
+│   ├── trend_stats.json         # 15 段趋势聚合
+│   ├── cluster_insights.json    # 8 张主题表的聚合结果
+│   └── cluster_tables/          # 8 张聚类派生 Parquet
+│       ├── cluster_profile.parquet
+│       ├── cluster_city_rank.parquet
+│       ├── cluster_category_preference.parquet
+│       ├── cluster_channel_efficiency.parquet
+│       ├── cluster_price_band.parquet
+│       ├── cluster_top_projects.parquet
+│       ├── cluster_doctor_matching.parquet
+│       └── cluster_month_delta.parquet
+├── database/
+│   └── dashboard_users.json     # 看板用户 JSON（运行后生成）
+├── run_all.py                   # 一键运行 4 步全流程
+├── requirements.txt
+├── docker-compose.hdfs.yml      # 最小 HDFS Docker 集群
+├── CHANGELOG.md                 # 本次迭代改动记录
+└── README.md
 ```
 
 ## 文档
 
-- [项目说明](project/doc/项目说明.md)
-- [数据库设计说明](project/doc/数据库设计说明.md)
+- [项目说明](doc/项目说明.md) —— 数据仓库分层设计、8 张聚类主题表对照、技术栈总结
+- [CHANGELOG](CHANGELOG.md) —— 本次迭代的完整改动记录
 
 ## 说明
 
-- 聚类特征为：标价、到手价、折扣率、月销量、评价数、评分；可在 `config.py` 中调整聚类数 K。
-- 上架日期列中的无效值（如 Excel 显示的 `########`）在预处理时会被置为空，不影响后续分析。
+- **聚类特征**：`list_price`、`actual_price`、`discount_rate`、`monthly_sales`、`review_count`、`rating`；K 值可在 `config.KMEANS_K` 中调整（配合 `python -m src.elbow_plot` 的肘部法则曲线选择）。
+- **业务标签自动打标**：基于聚类中心均值的 `RANK() OVER` 自动判断"高端精品型 / 大众爆款型 / 长尾引流型 / 中端主力型"，见 `src/analysis.py::run_cluster_warehouse` 第 1 张表 `cluster_profile`。
+- **日期处理**：上架日期列中的无效值（如 Excel 显示的 `########`）在预处理时会被置为空，不影响后续分析。
+- **统计月份**：`stats_month` 由 `collection_date` 派生（`YYYY-MM`）；若源数据仅有单月，预处理会把一半行改成上月以便看板演示月份切换（`src/preprocess.py::_split_single_month_into_two_month_labels`）。
