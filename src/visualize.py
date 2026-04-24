@@ -47,6 +47,37 @@ def get_cluster_insights_json():
     return {}
 
 
+def _read_json_if_exists(filename):
+    path = os.path.join(config.OUTPUT_DIR, filename)
+    if not os.path.isfile(path):
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def get_statistical_json():
+    """读取统计检验 & 相关性分析结果。"""
+    return _read_json_if_exists("statistical_analysis.json")
+
+
+def get_structure_json():
+    """读取关联 & 结构分析结果。"""
+    return _read_json_if_exists("structure_analysis.json")
+
+
+def get_compliance_json():
+    """读取合规风险打分结果。"""
+    return _read_json_if_exists("compliance_analysis.json")
+
+
+def get_advanced_insights_json():
+    """读取三块高级分析的汇总结果。"""
+    return _read_json_if_exists("advanced_insights.json")
+
+
 def get_trend_data():
     """读取趋势统计与聚类中心（兼容旧版 JSON；新版看板优先使用 /api/analytics）。"""
     trend_path = os.path.join(config.OUTPUT_DIR, "trend_stats.json")
@@ -398,6 +429,30 @@ def create_app():
     def api_cluster_insights():
         """聚类深度分析：返回 8 张主题宽表的聚合结果 + 聚类中心 + 元信息。"""
         return jsonify(get_cluster_insights_json())
+
+    @app.route("/api/statistical")
+    @login_required
+    def api_statistical():
+        """统计检验与相关性：相关矩阵 + 价格弹性 + 评分-销量分层相关。"""
+        return jsonify(get_statistical_json())
+
+    @app.route("/api/structure")
+    @login_required
+    def api_structure():
+        """关联与结构分析：HHI/CR10 + 帕累托 + 城市相似度。"""
+        return jsonify(get_structure_json())
+
+    @app.route("/api/compliance")
+    @login_required
+    def api_compliance():
+        """合规风险打分：机构/品类/城市合规画像 + 机构风险排名。"""
+        return jsonify(get_compliance_json())
+
+    @app.route("/api/advanced_insights")
+    @login_required
+    def api_advanced_insights():
+        """一次性返回三块高级分析的汇总。"""
+        return jsonify(get_advanced_insights_json())
 
     return app
 

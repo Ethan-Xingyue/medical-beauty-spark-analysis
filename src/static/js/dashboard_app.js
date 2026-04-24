@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
 (function () {
   var trendData = null;
   var clusterInsights = null;
+  var advancedInsights = null;
   var charts = {};
   var cityTopN = 15;
   var selectedMonth = "all";
@@ -845,6 +846,238 @@ series: [
     renderPriceDiscount();
     renderCluster();
     renderClusterDeep();
+    renderAdvanced();
+  }
+
+  // ========== 高级分析：统计检验 / 结构 / 合规 ==========
+  function renderAdvanced() {
+    var ai = advancedInsights || {};
+    var stat = ai.statistical || {};
+    var struct = ai.structure || {};
+    var comp = ai.compliance || {};
+
+    // 1) Pearson 热力图
+    var features = stat.features || [];
+    var pearson = stat.pearson_matrix || [];
+    if (features.length && pearson.length) {
+      var data = [];
+      var idx = {};
+      features.forEach(function (f, i) { idx[f] = i; });
+      pearson.forEach(function (r) {
+        var i = idx[r.feature_a], j = idx[r.feature_b];
+        if (i != null && j != null && r.corr != null) {
+          data.push([j, i, Number(r.corr.toFixed(3))]);
+        }
+      });
+      if (!charts.advPearson) charts.advPearson = echarts.init(document.getElementById("chartAdvPearson"));
+      charts.advPearson.setOption({
+        title: { text: "Pearson 相关矩阵", left: "center", textStyle: { fontSize: 13, color: "#0f172a" } },
+        tooltip: { position: "top" },
+        grid: { left: 80, right: 20, top: 50, bottom: 90, containLabel: true },
+        xAxis: { type: "category", data: features, axisLabel: { rotate: 25, fontSize: 10 } },
+        yAxis: { type: "category", data: features, axisLabel: { fontSize: 10 } },
+        visualMap: { min: -1, max: 1, calculable: true, orient: "horizontal", left: "center", bottom: 10,
+          inRange: { color: ["#2563eb", "#e2e8f0", "#dc2626"] } },
+        series: [{ name: "corr", type: "heatmap", data: data,
+          label: { show: true, fontSize: 10 },
+          emphasis: { itemStyle: { shadowBlur: 10 } } }]
+      });
+    }
+
+    // 2) 价格弹性条形图
+    var elast = stat.price_elasticity_by_category || [];
+    if (elast.length) {
+      if (!charts.advElasticity) charts.advElasticity = echarts.init(document.getElementById("chartAdvElasticity"));
+      charts.advElasticity.setOption({
+        title: { text: "分品类价格弹性（ln(sales) ~ ln(price) 斜率）", left: "center", textStyle: { fontSize: 13, color: "#0f172a" } },
+        tooltip: { trigger: "axis", axisPointer: { type: "shadow" },
+          formatter: function (params) {
+            var p = params[0];
+            var row = elast[p.dataIndex] || {};
+            return p.name + "<br/>弹性系数: " + Number(p.value).toFixed(3) +
+                   "<br/>R²: " + (row.r2 != null ? Number(row.r2).toFixed(3) : "—") +
+                   "<br/>样本数: " + (row.n != null ? row.n : "—");
+          } },
+        grid: { left: 12, right: 12, top: 48, bottom: 48, containLabel: true },
+        xAxis: { type: "category", data: elast.map(function (r) { return r.category || ""; }), axisLabel: { rotate: 15, fontSize: 11 } },
+        yAxis: { type: "value", name: "弹性系数" },
+        series: [{ type: "bar", data: elast.map(function (r) { return r.elasticity != null ? Number(r.elasticity) : null; }),
+          itemStyle: {
+            color: function (p) {
+              var v = p.value;
+              if (v == null) return "#94a3b8";
+              return v < -1 ? "#dc2626" : (v < 0 ? "#f97316" : "#22c55e");
+            }
+          } }]
+      });
+    }
+
+    // 3) 评分-销量分层相关
+    var rcCity = stat.rating_sales_corr_by_city || [];
+    fillTable("tbodyAdvRatingCity", ["城市", "相关系数", "样本数", "平均评分", "平均销量"],
+      rcCity.slice(0, 30).map(function (r) {
+        return {
+          城市: r.city || "",
+          相关系数: r.corr_rating_sales != null ? Number(r.corr_rating_sales).toFixed(4) : "—",
+          样本数: r.n,
+          平均评分: r.avg_rating != null ? Number(r.avg_rating).toFixed(3) : "—",
+          平均销量: r.avg_sales != null ? Number(r.avg_sales).toFixed(1) : "—"
+        };
+      }));
+
+    var rcCat = stat.rating_sales_corr_by_category || [];
+    fillTable("tbodyAdvRatingCat", ["品类", "相关系数", "样本数", "平均评分", "平均销量"],
+      rcCat.map(function (r) {
+        return {
+          品类: r.category || "",
+          相关系数: r.corr_rating_sales != null ? Number(r.corr_rating_sales).toFixed(4) : "—",
+          样本数: r.n,
+          平均评分: r.avg_rating != null ? Number(r.avg_rating).toFixed(3) : "—",
+          平均销量: r.avg_sales != null ? Number(r.avg_sales).toFixed(1) : "—"
+        };
+      }));
+
+    // 4) HHI 城市条形图
+    var hhiCity = struct.hhi_by_city || [];
+    if (hhiCity.length) {
+      var top = hhiCity.slice(0, 20);
+      if (!charts.advHHICity) charts.advHHICity = echarts.init(document.getElementById("chartAdvHHICity"));
+      charts.advHHICity.setOption({
+        title: { text: "各城市机构集中度 HHI（×10000）", left: "center", textStyle: { fontSize: 13, color: "#0f172a" } },
+        tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+        grid: { left: 12, right: 12, top: 48, bottom: 60, containLabel: true },
+        xAxis: { type: "category", data: top.map(function (r) { return r.city || ""; }), axisLabel: { rotate: 25, fontSize: 10 } },
+        yAxis: { type: "value", name: "HHI" },
+        series: [{ type: "bar", data: top.map(function (r) { return r.hhi != null ? Number(r.hhi.toFixed(1)) : null; }),
+          itemStyle: {
+            color: function (p) {
+              var v = p.value;
+              if (v == null) return "#94a3b8";
+              return v >= 2500 ? "#dc2626" : (v >= 1500 ? "#f97316" : "#22c55e");
+            }
+          } }]
+      });
+    }
+    fillTable("tbodyAdvHHICity", ["城市", "HHI", "CR10", "机构数", "销量合计", "集中度等级"],
+      hhiCity.map(function (r) {
+        return {
+          城市: r.city || "",
+          HHI: r.hhi != null ? Number(r.hhi).toFixed(1) : "—",
+          CR10: r.cr10 != null ? (Number(r.cr10) * 100).toFixed(2) + "%" : "—",
+          机构数: r.institution_count,
+          销量合计: r.total_sales != null ? fmtNum(r.total_sales) : "—",
+          集中度等级: r.concentration_level || ""
+        };
+      }));
+
+    // 5) 帕累托 20/80
+    var pareto = struct.pareto_projects || [];
+    if (pareto.length) {
+      if (!charts.advPareto) charts.advPareto = echarts.init(document.getElementById("chartAdvPareto"));
+      var bps = struct.pareto_breakpoints || [];
+      var markLines = bps.map(function (b) {
+        return { xAxis: Number((b.project_share * 100).toFixed(2)),
+                 label: { formatter: Math.round(b.cum_share_threshold * 100) + "%" } };
+      });
+      charts.advPareto.setOption({
+        title: { text: "项目销量帕累托累计分布（20/80）", left: "center", textStyle: { fontSize: 13, color: "#0f172a" } },
+        tooltip: { trigger: "axis",
+          formatter: function (params) {
+            var p = params[0];
+            return "项目占比 " + p.data[0] + "%<br/>累计销量占比 " + p.data[1] + "%";
+          } },
+        grid: { left: 12, right: 12, top: 48, bottom: 48, containLabel: true },
+        xAxis: { type: "value", name: "项目占比(%)", min: 0, max: 100 },
+        yAxis: { type: "value", name: "累计销量占比(%)", min: 0, max: 100 },
+        series: [{ type: "line", smooth: true, showSymbol: false,
+          data: pareto.map(function (r) {
+            return [Number((r.project_share * 100).toFixed(2)),
+                    Number((r.cum_share * 100).toFixed(2))];
+          }),
+          itemStyle: { color: "#2563eb" },
+          areaStyle: { color: "rgba(37,99,235,0.15)" },
+          markLine: markLines.length ? { symbol: "none", lineStyle: { color: "#f97316", type: "dashed" }, data: markLines } : null
+        }]
+      });
+    }
+
+    // 6) 城市相似度 Top-5
+    var sim = struct.city_similarity_top || [];
+    fillTable("tbodyAdvCitySim", ["城市", "相似城市"],
+      sim.map(function (r) {
+        return {
+          城市: r.city || "",
+          相似城市: (r.top_similar || []).map(function (s) {
+            return s.city + "(" + Number(s.similarity).toFixed(3) + ")";
+          }).join("，")
+        };
+      }));
+
+    // 7) 合规风险等级分布
+    var riskDist = comp.institution_risk_distribution || [];
+    if (riskDist.length) {
+      if (!charts.advRiskDist) charts.advRiskDist = echarts.init(document.getElementById("chartAdvRiskDist"));
+      var colors = { "高风险": "#dc2626", "中风险": "#f97316", "低风险": "#22c55e" };
+      charts.advRiskDist.setOption({
+        title: { text: "机构合规风险等级分布", left: "center", textStyle: { fontSize: 13, color: "#0f172a" } },
+        tooltip: { trigger: "item" },
+        legend: { bottom: 0 },
+        series: [{ type: "pie", radius: ["38%", "60%"],
+          data: riskDist.map(function (r) {
+            return { name: r.risk_level, value: r.count,
+                     itemStyle: { color: colors[r.risk_level] || "#64748b" } };
+          }) }]
+      });
+    }
+
+    // 8) 品类合规画像条形图
+    var catRisk = comp.category_risk || [];
+    if (catRisk.length) {
+      if (!charts.advCatRisk) charts.advCatRisk = echarts.init(document.getElementById("chartAdvCompCategory"));
+      charts.advCatRisk.setOption({
+        title: { text: "品类合规指标（UDI 不匹配率 / 低评分率）", left: "center", textStyle: { fontSize: 13, color: "#0f172a" } },
+        tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
+        legend: { data: ["UDI 不匹配率", "低评分率", "价格异常率"], bottom: 0 },
+        grid: { left: 12, right: 12, top: 48, bottom: 60, containLabel: true },
+        xAxis: { type: "category", data: catRisk.map(function (r) { return r.category || ""; }), axisLabel: { rotate: 15 } },
+        yAxis: { type: "value", name: "比例", axisLabel: { formatter: function (v) { return (v * 100).toFixed(0) + "%"; } } },
+        series: [
+          { name: "UDI 不匹配率", type: "bar", data: catRisk.map(function (r) { return Number((r.udi_mismatch_rate || 0).toFixed(4)); }), itemStyle: { color: "#dc2626" } },
+          { name: "低评分率", type: "bar", data: catRisk.map(function (r) { return Number((r.low_rating_rate || 0).toFixed(4)); }), itemStyle: { color: "#f97316" } },
+          { name: "价格异常率", type: "bar", data: catRisk.map(function (r) { return Number((r.price_anomaly_rate || 0).toFixed(4)); }), itemStyle: { color: "#a855f7" } }
+        ]
+      });
+    }
+
+    // 9) 机构风险 Top-20 表格
+    var instTop = comp.institution_risk_top || [];
+    fillTable("tbodyAdvInstRisk",
+      ["排名", "机构", "风险分", "等级", "UDI不匹配率", "疑似无效文号率", "低评分率", "价格异常率", "项目数", "平均评分"],
+      instTop.slice(0, 20).map(function (r) {
+        return {
+          排名: r.risk_rank,
+          机构: r.institution || "",
+          风险分: r.risk_score != null ? Number(r.risk_score).toFixed(2) : "—",
+          等级: r.risk_level || "",
+          "UDI不匹配率": r.udi_mismatch_rate != null ? (Number(r.udi_mismatch_rate) * 100).toFixed(2) + "%" : "—",
+          疑似无效文号率: r.invalid_approval_rate != null ? (Number(r.invalid_approval_rate) * 100).toFixed(2) + "%" : "—",
+          低评分率: r.low_rating_rate != null ? (Number(r.low_rating_rate) * 100).toFixed(2) + "%" : "—",
+          价格异常率: r.price_anomaly_rate != null ? (Number(r.price_anomaly_rate) * 100).toFixed(2) + "%" : "—",
+          项目数: r.project_count,
+          平均评分: r.avg_rating != null ? Number(r.avg_rating).toFixed(3) : "—"
+        };
+      }));
+
+    // 元信息
+    var meta = ai._metadata || {};
+    var compTotal = comp.institution_count_total;
+    var metaEl = document.getElementById("advMeta");
+    if (metaEl) {
+      metaEl.textContent =
+        "生成时间: " + (meta.generated_at || "—") +
+        " · 覆盖机构数: " + (compTotal != null ? compTotal : "—") +
+        " · 派生表目录: " + (meta.warehouse_dir || "—");
+    }
   }
 
   function loadData() {
@@ -859,11 +1092,13 @@ series: [
     return Promise.all([
       fetch("/api/analytics" + q).then(h401),
       fetch("/api/cluster").then(h401),
-      fetch("/api/cluster_insights").then(h401).catch(function () { return {}; })
-    ]).then(function (triple) {
-      trendData = triple[0];
-      trendData.cluster_centers = triple[1].cluster_centers;
-      clusterInsights = triple[2] || {};
+      fetch("/api/cluster_insights").then(h401).catch(function () { return {}; }),
+      fetch("/api/advanced_insights").then(h401).catch(function () { return {}; })
+    ]).then(function (quad) {
+      trendData = quad[0];
+      trendData.cluster_centers = quad[1].cluster_centers;
+      clusterInsights = quad[2] || {};
+      advancedInsights = quad[3] || {};
       renderAll();
       toast("数据已更新");
     }).catch(function (e) {
@@ -1006,6 +1241,34 @@ series: [
     var btnEDM = document.getElementById("btnExportDocMatch");
     if (btnEDM) btnEDM.addEventListener("click", function () {
       downloadCsv("聚类_医生头衔.csv", (clusterInsights && clusterInsights.cluster_doctor_matching) || []);
+    });
+
+    // 高级分析页按钮
+    var btnAdv = document.getElementById("btnAdvRefresh");
+    if (btnAdv) btnAdv.addEventListener("click", function () {
+      fetch("/api/advanced_insights")
+        .then(function (r) { return r.status === 401 ? (window.location.href = "/login", null) : r.json(); })
+        .then(function (j) { if (j) { advancedInsights = j; renderAdvanced(); toast("已刷新"); } });
+    });
+    var bEP = document.getElementById("btnExportPearson");
+    if (bEP) bEP.addEventListener("click", function () {
+      downloadCsv("Pearson相关矩阵.csv",
+        (advancedInsights && advancedInsights.statistical && advancedInsights.statistical.pearson_matrix) || []);
+    });
+    var bEE = document.getElementById("btnExportElasticity");
+    if (bEE) bEE.addEventListener("click", function () {
+      downloadCsv("分品类价格弹性.csv",
+        (advancedInsights && advancedInsights.statistical && advancedInsights.statistical.price_elasticity_by_category) || []);
+    });
+    var bEH = document.getElementById("btnExportHHICity");
+    if (bEH) bEH.addEventListener("click", function () {
+      downloadCsv("城市HHI.csv",
+        (advancedInsights && advancedInsights.structure && advancedInsights.structure.hhi_by_city) || []);
+    });
+    var bEI = document.getElementById("btnExportInstRisk");
+    if (bEI) bEI.addEventListener("click", function () {
+      downloadCsv("机构合规风险TOP.csv",
+        (advancedInsights && advancedInsights.compliance && advancedInsights.compliance.institution_risk_top) || []);
     });
   }
 

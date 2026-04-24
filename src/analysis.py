@@ -465,7 +465,7 @@ def run_clustered_analysis(output_dir=None):
 #   3) cluster_category_preference  聚类品类偏好度 Lift（多表 JOIN + CTE）
 #   4) cluster_channel_efficiency   聚类×渠道效率（加权销量 + RANK）
 #   5) cluster_price_band           聚类×折扣分桶（CASE WHEN + PERCENT_RANK）
-#   6) cluster_top_projects         聚类 TOP 项目（ROW_NUMBER WHERE rn<=5）
+#   6) cluster_top_projects         聚类 TOP medical-beauty-spark-analysis（ROW_NUMBER WHERE rn<=5）
 #   7) cluster_doctor_matching      聚类×医生头衔（COUNT DISTINCT + RANK）
 #   8) cluster_month_delta          聚类月度环比（LAG + CTE + COALESCE）
 # ================================================================
@@ -768,7 +768,7 @@ def run_cluster_warehouse(clustered_parquet=None, output_dir=None):
     )
     _emit("cluster_price_band", sql_band)
 
-    # ---------------- 6) 聚类 TOP 项目（ROW_NUMBER） ----------------
+    # ---------------- 6) 聚类 TOP medical-beauty-spark-analysis（ROW_NUMBER） ----------------
     sql_top = (
         "WITH proj AS (\n"
         "  SELECT\n"
@@ -898,7 +898,615 @@ def run_cluster_warehouse(clustered_parquet=None, output_dir=None):
     }
 
 
-def run(parquet_path=None, output_dir=None, k=None, use_clustered_data=True, build_warehouse=True):
+# ================================================================
+# 高级分析：统计检验 & 相关性 / 关联 & 结构 / 合规风险
+# ================================================================
+#
+# 与聚类仓库同级的 ADS 层扩展：补齐 GROUP BY 之外的"量化关系"指标。
+# 所有函数读取 clean_data.parquet（不依赖聚类结果），独立产出 JSON/Parquet，
+# 便于 Flask 看板直接读。技术点：
+#   - Spark SQL 的 corr() / regr_slope / regr_r2（相关与回归）
+#   - 窗口函数 SUM() OVER / ROW_NUMBER + CTE（HHI / CR10 / 帕累托）
+#   - Spark + pandas 混合（城市×品类销量矩阵 → numpy 余弦相似度）
+#   - 多条件 CASE WHEN 组合合规指标，按权重合成机构风险分
+# ================================================================
+
+
+_ADVANCED_DIRNAME = "advanced_tables"
+
+
+def advanced_warehouse_dir(output_dir=None):
+    """高级分析派生表的输出目录。"""
+    output_dir = output_dir or config.OUTPUT_DIR
+    return os.path.join(output_dir, _ADVANCED_DIRNAME)
+
+
+# 6 个数值特征对，供相关矩阵使用
+_ADVANCED_NUMERIC_COLS = [
+    config.COL_PRICE_ORIGINAL,
+    config.COL_PRICE_ACTUAL,
+    config.COL_DISCOUNT,
+    config.COL_MONTHLY_SALES,
+    config.COL_REVIEW_COUNT,
+    config.COL_RATING,
+]
+
+
+def _prepare_advanced_df(spark, parquet_path):
+    """读取清洗后的 Parquet，转数值类型并注册临时视图 sales_advanced。"""
+    df = spark.read.parquet(parquet_path)
+    df = _cast_numeric_cols(df, _ADVANCED_NUMERIC_COLS)
+    if "udi_match" in df.columns:
+        df = df.withColumn("udi_match", F.col("udi_match").cast("double"))
+    df.createOrReplaceTempView("sales_advanced")
+    return df
+
+
+# -------------------- 一、统计检验 & 相关性 --------------------
+def run_statistical_analysis(parquet_path=None, output_dir=None):
+    """
+    统计检验 & 相关性分析：
+      1) Pearson 相关矩阵（6 个数值特征两两）
+      2) Spearman 相关矩阵（等价于排名后 Pearson，用窗口 RANK 实现）
+      3) 价格弹性：按品类分组 ln(sales) ~ ln(price) 的一元线性回归
+      4) 评分-销量相关性：按城市、按品类分层
+
+    产物：
+      - advanced_tables/stat_price_elasticity.parquet
+      - advanced_tables/stat_rating_sales_by_city.parquet
+      - advanced_tables/stat_rating_sales_by_category.parquet
+      - statistical_analysis.json（含矩阵、分层相关、弹性排名）
+    """
+    parquet_path = parquet_path or config.clean_parquet_uri()
+    output_dir = output_dir or config.OUTPUT_DIR
+    config.ensure_dirs()
+    warehouse_dir = advanced_warehouse_dir(output_dir)
+    os.makedirs(warehouse_dir, exist_ok=True)
+
+    spark = _get_spark()
+    df = _prepare_advanced_df(spark, parquet_path)
+    q = _quote_ident
+
+    results = {}
+    available = [c for c in _ADVANCED_NUMERIC_COLS if c in df.columns]
+
+    def _corr_matrix(view_name, col_ref):
+        """一次 SELECT 取 N*(N-1)/2 个 corr，再展开成对称矩阵。"""
+        if not available:
+            return []
+        pairs = []
+        parts = []
+        for i, a in enumerate(available):
+            for b in available[i + 1:]:
+                alias = "c__{}__{}".format(i, available.index(b))
+                parts.append("corr({a}, {b}) AS {al}".format(a=col_ref(a), b=col_ref(b), al=alias))
+                pairs.append((alias, a, b))
+        if not parts:
+            return []
+        sql = "SELECT " + ", ".join(parts) + " FROM " + view_name
+        row = spark.sql(sql).collect()[0]
+        out = []
+        for a in available:
+            out.append({"feature_a": a, "feature_b": a, "corr": 1.0})
+        for alias, a, b in pairs:
+            v = row[alias]
+            val = float(v) if v is not None else None
+            out.append({"feature_a": a, "feature_b": b, "corr": val})
+            out.append({"feature_a": b, "feature_b": a, "corr": val})
+        return out
+
+    # 1) Pearson 相关矩阵
+    results["pearson_matrix"] = _corr_matrix("sales_advanced", lambda c: q(c))
+    results["features"] = available
+
+    # 2) Spearman：排名后 Pearson
+    rank_sql_parts = []
+    for c in available:
+        rank_sql_parts.append(
+            "RANK() OVER (ORDER BY {col}) AS r_{alias}".format(col=q(c), alias=c)
+        )
+    if rank_sql_parts:
+        ranked_sql = (
+            "SELECT " + ", ".join(rank_sql_parts) + " FROM sales_advanced WHERE "
+            + " AND ".join("{} IS NOT NULL".format(q(c)) for c in available)
+        )
+        spark.sql(ranked_sql).createOrReplaceTempView("sales_ranked")
+        results["spearman_matrix"] = _corr_matrix("sales_ranked", lambda c: "r_" + c)
+
+    # 3) 价格弹性：按品类分组 ln(sales) ~ ln(price)
+    if config.COL_CATEGORY in df.columns:
+        sql_elast = (
+            "WITH base AS (\n"
+            "  SELECT {cat} AS category,\n"
+            "         LN({actual}) AS ln_price,\n"
+            "         LN({sales})  AS ln_sales\n"
+            "  FROM sales_advanced\n"
+            "  WHERE {cat} IS NOT NULL AND {actual} > 0 AND {sales} > 0\n"
+            ")\n"
+            "SELECT category,\n"
+            "       regr_slope(ln_sales, ln_price)     AS elasticity,\n"
+            "       regr_intercept(ln_sales, ln_price) AS intercept,\n"
+            "       regr_r2(ln_sales, ln_price)        AS r2,\n"
+            "       COUNT(*) AS n\n"
+            "FROM base\n"
+            "GROUP BY category\n"
+            "ORDER BY elasticity ASC NULLS LAST\n"
+        ).format(
+            cat=q(config.COL_CATEGORY),
+            actual=q(config.COL_PRICE_ACTUAL),
+            sales=q(config.COL_MONTHLY_SALES),
+        )
+        elast_df = spark.sql(sql_elast)
+        _write_spark_parquet(elast_df, os.path.join(warehouse_dir, "stat_price_elasticity.parquet"))
+        results["price_elasticity_by_category"] = _collect_as_dicts(elast_df)
+
+    # 4) 评分-销量相关性：按城市分层
+    if config.COL_CITY in df.columns:
+        sql_rc = (
+            "SELECT {city} AS city,\n"
+            "       corr({rating}, {sales}) AS corr_rating_sales,\n"
+            "       COUNT(*) AS n,\n"
+            "       AVG({rating}) AS avg_rating,\n"
+            "       AVG({sales})  AS avg_sales\n"
+            "FROM sales_advanced\n"
+            "WHERE {city} IS NOT NULL\n"
+            "GROUP BY {city}\n"
+            "HAVING COUNT(*) >= 30\n"
+            "ORDER BY corr_rating_sales DESC NULLS LAST\n"
+        ).format(
+            city=q(config.COL_CITY),
+            rating=q(config.COL_RATING),
+            sales=q(config.COL_MONTHLY_SALES),
+        )
+        rc_city = spark.sql(sql_rc)
+        _write_spark_parquet(rc_city, os.path.join(warehouse_dir, "stat_rating_sales_by_city.parquet"))
+        results["rating_sales_corr_by_city"] = _collect_as_dicts(rc_city)
+
+    # 5) 评分-销量相关性：按品类分层
+    if config.COL_CATEGORY in df.columns:
+        sql_rcat = (
+            "SELECT {cat} AS category,\n"
+            "       corr({rating}, {sales}) AS corr_rating_sales,\n"
+            "       COUNT(*) AS n,\n"
+            "       AVG({rating}) AS avg_rating,\n"
+            "       AVG({sales})  AS avg_sales\n"
+            "FROM sales_advanced\n"
+            "WHERE {cat} IS NOT NULL\n"
+            "GROUP BY {cat}\n"
+            "ORDER BY corr_rating_sales DESC NULLS LAST\n"
+        ).format(
+            cat=q(config.COL_CATEGORY),
+            rating=q(config.COL_RATING),
+            sales=q(config.COL_MONTHLY_SALES),
+        )
+        rc_cat = spark.sql(sql_rcat)
+        _write_spark_parquet(rc_cat, os.path.join(warehouse_dir, "stat_rating_sales_by_category.parquet"))
+        results["rating_sales_corr_by_category"] = _collect_as_dicts(rc_cat)
+
+    out_path = os.path.join(output_dir, "statistical_analysis.json")
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(results, f, ensure_ascii=False, indent=2)
+    spark.stop()
+    return {"statistical_json": out_path, "warehouse_dir": warehouse_dir}
+
+
+# -------------------- 二、关联 & 结构分析 --------------------
+def run_structure_analysis(parquet_path=None, output_dir=None):
+    """
+    关联 & 结构分析：
+      1) 机构集中度 HHI + CR10（整体 / 按城市 / 按品类）
+      2) 项目帕累托 20/80（累计销量分布）
+      3) 城市相似度矩阵：基于城市×品类销量的余弦相似度
+
+    产物：
+      - advanced_tables/struct_hhi_overall.parquet
+      - advanced_tables/struct_hhi_by_city.parquet
+      - advanced_tables/struct_hhi_by_category.parquet
+      - advanced_tables/struct_pareto_projects.parquet
+      - advanced_tables/struct_city_similarity.parquet
+      - structure_analysis.json
+    """
+    parquet_path = parquet_path or config.clean_parquet_uri()
+    output_dir = output_dir or config.OUTPUT_DIR
+    config.ensure_dirs()
+    warehouse_dir = advanced_warehouse_dir(output_dir)
+    os.makedirs(warehouse_dir, exist_ok=True)
+
+    spark = _get_spark()
+    df = _prepare_advanced_df(spark, parquet_path)
+    q = _quote_ident
+
+    results = {}
+
+    # 1) 全局 HHI + CR10：一次聚合
+    sql_hhi_overall = (
+        "WITH inst_sales AS (\n"
+        "  SELECT {inst} AS institution, SUM({sales}) AS ss\n"
+        "  FROM sales_advanced\n"
+        "  WHERE {inst} IS NOT NULL\n"
+        "  GROUP BY {inst}\n"
+        "),\n"
+        "with_total AS (\n"
+        "  SELECT institution, ss,\n"
+        "         SUM(ss) OVER ()                         AS total_ss,\n"
+        "         ROW_NUMBER() OVER (ORDER BY ss DESC)    AS rn\n"
+        "  FROM inst_sales\n"
+        ")\n"
+        "SELECT\n"
+        "  SUM(POWER(ss / total_ss, 2)) * 10000 AS hhi,\n"
+        "  SUM(CASE WHEN rn <= 10 THEN ss / total_ss END) AS cr10,\n"
+        "  SUM(CASE WHEN rn <= 5  THEN ss / total_ss END) AS cr5,\n"
+        "  COUNT(*) AS institution_count,\n"
+        "  MAX(total_ss) AS total_sales\n"
+        "FROM with_total\n"
+    ).format(inst=q(config.COL_INSTITUTION), sales=q(config.COL_MONTHLY_SALES))
+    overall_df = spark.sql(sql_hhi_overall)
+    _write_spark_parquet(overall_df, os.path.join(warehouse_dir, "struct_hhi_overall.parquet"))
+    overall_rows = _collect_as_dicts(overall_df)
+    results["hhi_overall"] = overall_rows[0] if overall_rows else {}
+
+    # 2) 按城市 HHI
+    if config.COL_CITY in df.columns:
+        sql_hhi_city = (
+            "WITH inst_city AS (\n"
+            "  SELECT {city} AS city, {inst} AS institution, SUM({sales}) AS ss\n"
+            "  FROM sales_advanced\n"
+            "  WHERE {city} IS NOT NULL AND {inst} IS NOT NULL\n"
+            "  GROUP BY {city}, {inst}\n"
+            "),\n"
+            "with_total AS (\n"
+            "  SELECT city, institution, ss,\n"
+            "         SUM(ss) OVER (PARTITION BY city)                         AS total_ss,\n"
+            "         ROW_NUMBER() OVER (PARTITION BY city ORDER BY ss DESC)   AS rn\n"
+            "  FROM inst_city\n"
+            ")\n"
+            "SELECT city,\n"
+            "       SUM(POWER(ss / total_ss, 2)) * 10000 AS hhi,\n"
+            "       SUM(CASE WHEN rn <= 10 THEN ss / total_ss END) AS cr10,\n"
+            "       COUNT(*) AS institution_count,\n"
+            "       MAX(total_ss) AS total_sales,\n"
+            "       CASE\n"
+            "         WHEN SUM(POWER(ss / total_ss, 2)) * 10000 < 1500 THEN '竞争充分'\n"
+            "         WHEN SUM(POWER(ss / total_ss, 2)) * 10000 < 2500 THEN '中度集中'\n"
+            "         ELSE '高度集中'\n"
+            "       END AS concentration_level\n"
+            "FROM with_total\n"
+            "GROUP BY city\n"
+            "ORDER BY hhi DESC\n"
+        ).format(
+            city=q(config.COL_CITY),
+            inst=q(config.COL_INSTITUTION),
+            sales=q(config.COL_MONTHLY_SALES),
+        )
+        city_df = spark.sql(sql_hhi_city)
+        _write_spark_parquet(city_df, os.path.join(warehouse_dir, "struct_hhi_by_city.parquet"))
+        results["hhi_by_city"] = _collect_as_dicts(city_df)
+
+    # 3) 按品类 HHI
+    if config.COL_CATEGORY in df.columns:
+        sql_hhi_cat = (
+            "WITH inst_cat AS (\n"
+            "  SELECT {cat} AS category, {inst} AS institution, SUM({sales}) AS ss\n"
+            "  FROM sales_advanced\n"
+            "  WHERE {cat} IS NOT NULL AND {inst} IS NOT NULL\n"
+            "  GROUP BY {cat}, {inst}\n"
+            "),\n"
+            "with_total AS (\n"
+            "  SELECT category, institution, ss,\n"
+            "         SUM(ss) OVER (PARTITION BY category)                         AS total_ss,\n"
+            "         ROW_NUMBER() OVER (PARTITION BY category ORDER BY ss DESC)   AS rn\n"
+            "  FROM inst_cat\n"
+            ")\n"
+            "SELECT category,\n"
+            "       SUM(POWER(ss / total_ss, 2)) * 10000 AS hhi,\n"
+            "       SUM(CASE WHEN rn <= 10 THEN ss / total_ss END) AS cr10,\n"
+            "       COUNT(*) AS institution_count\n"
+            "FROM with_total\n"
+            "GROUP BY category\n"
+            "ORDER BY hhi DESC\n"
+        ).format(
+            cat=q(config.COL_CATEGORY),
+            inst=q(config.COL_INSTITUTION),
+            sales=q(config.COL_MONTHLY_SALES),
+        )
+        cat_df = spark.sql(sql_hhi_cat)
+        _write_spark_parquet(cat_df, os.path.join(warehouse_dir, "struct_hhi_by_category.parquet"))
+        results["hhi_by_category"] = _collect_as_dicts(cat_df)
+
+    # 4) 帕累托 20/80：按项目销量累计
+    if config.COL_PROJECT_NAME in df.columns:
+        sql_pareto = (
+            "WITH proj AS (\n"
+            "  SELECT {pn} AS project_name, SUM({sales}) AS total_sales\n"
+            "  FROM sales_advanced\n"
+            "  WHERE {pn} IS NOT NULL\n"
+            "  GROUP BY {pn}\n"
+            "),\n"
+            "ranked AS (\n"
+            "  SELECT project_name, total_sales,\n"
+            "         ROW_NUMBER() OVER (ORDER BY total_sales DESC) AS rn,\n"
+            "         SUM(total_sales) OVER (ORDER BY total_sales DESC\n"
+            "                                ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS cum_sales,\n"
+            "         SUM(total_sales) OVER () AS grand_sales,\n"
+            "         COUNT(*) OVER ()         AS grand_count\n"
+            "  FROM proj\n"
+            ")\n"
+            "SELECT project_name, total_sales, rn, cum_sales,\n"
+            "       cum_sales / grand_sales AS cum_share,\n"
+            "       CAST(rn AS DOUBLE) / grand_count AS project_share\n"
+            "FROM ranked\n"
+            "ORDER BY rn\n"
+        ).format(pn=q(config.COL_PROJECT_NAME), sales=q(config.COL_MONTHLY_SALES))
+        pareto_df = spark.sql(sql_pareto)
+        _write_spark_parquet(pareto_df, os.path.join(warehouse_dir, "struct_pareto_projects.parquet"))
+        pareto_rows = _collect_as_dicts(pareto_df)
+
+        # 关键切点：找到 cum_share 首次 >= 0.5 / 0.8 / 0.95 的项目份额
+        def _first_reach(rows, threshold):
+            for row in rows:
+                if row.get("cum_share") is not None and row["cum_share"] >= threshold:
+                    return {
+                        "cum_share_threshold": threshold,
+                        "project_share": row.get("project_share"),
+                        "rn": row.get("rn"),
+                    }
+            return None
+
+        breakpoints = [
+            _first_reach(pareto_rows, 0.5),
+            _first_reach(pareto_rows, 0.8),
+            _first_reach(pareto_rows, 0.95),
+        ]
+        # Parquet 行数较多时只保留 1000 行给前端（每 N 行采样一次）
+        step = max(1, len(pareto_rows) // 500) if pareto_rows else 1
+        sampled = pareto_rows[::step] if step > 1 else pareto_rows
+        results["pareto_projects"] = sampled
+        results["pareto_breakpoints"] = [b for b in breakpoints if b is not None]
+
+    # 5) 城市相似度矩阵：基于城市×品类销量的余弦相似度
+    if config.COL_CITY in df.columns and config.COL_CATEGORY in df.columns:
+        sql_cc = (
+            "SELECT {city} AS city, {cat} AS category, SUM({sales}) AS total_sales\n"
+            "FROM sales_advanced\n"
+            "WHERE {city} IS NOT NULL AND {cat} IS NOT NULL\n"
+            "GROUP BY {city}, {cat}\n"
+        ).format(
+            city=q(config.COL_CITY),
+            cat=q(config.COL_CATEGORY),
+            sales=q(config.COL_MONTHLY_SALES),
+        )
+        cc_df = spark.sql(sql_cc)
+        import pandas as pd
+        import numpy as np
+
+        pdf = cc_df.toPandas()
+        if len(pdf) > 0:
+            mat = pdf.pivot_table(
+                index="city", columns="category", values="total_sales", fill_value=0
+            )
+            arr = mat.values.astype(float)
+            norms = np.linalg.norm(arr, axis=1, keepdims=True)
+            norms[norms == 0] = 1.0
+            normalized = arr / norms
+            sim = normalized @ normalized.T
+            cities = list(mat.index)
+
+            sim_rows = []
+            for i, ci in enumerate(cities):
+                for j, cj in enumerate(cities):
+                    sim_rows.append({"city_a": ci, "city_b": cj, "similarity": float(sim[i, j])})
+            sim_pdf = pd.DataFrame(sim_rows)
+            sim_pdf.to_parquet(
+                os.path.join(warehouse_dir, "struct_city_similarity.parquet"), index=False
+            )
+
+            # 取每个城市 Top-5 相似城市（排除自身）
+            topk = []
+            for i, ci in enumerate(cities):
+                order = np.argsort(-sim[i])
+                picks = []
+                for idx in order:
+                    if cities[idx] == ci:
+                        continue
+                    picks.append({"city": cities[idx], "similarity": float(sim[i, idx])})
+                    if len(picks) >= 5:
+                        break
+                topk.append({"city": ci, "top_similar": picks})
+            results["city_similarity_matrix"] = sim_rows
+            results["city_similarity_top"] = topk
+            results["city_similarity_cities"] = cities
+
+    out_path = os.path.join(output_dir, "structure_analysis.json")
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(results, f, ensure_ascii=False, indent=2)
+    spark.stop()
+    return {"structure_json": out_path, "warehouse_dir": warehouse_dir}
+
+
+# -------------------- 三、合规风险打分 --------------------
+def run_compliance_analysis(parquet_path=None, output_dir=None):
+    """
+    合规风险打分：
+      1) 按机构/品类统计 UDI 不匹配率、疑似无效批准文号率、低评分率、价格异常率
+      2) 合成机构合规风险分（加权）并排名
+
+    输出：
+      - advanced_tables/comp_institution_risk.parquet
+      - advanced_tables/comp_category_risk.parquet
+      - advanced_tables/comp_city_risk.parquet
+      - compliance_analysis.json
+    """
+    parquet_path = parquet_path or config.clean_parquet_uri()
+    output_dir = output_dir or config.OUTPUT_DIR
+    config.ensure_dirs()
+    warehouse_dir = advanced_warehouse_dir(output_dir)
+    os.makedirs(warehouse_dir, exist_ok=True)
+
+    spark = _get_spark()
+    df = _prepare_advanced_df(spark, parquet_path)
+    q = _quote_ident
+
+    results = {}
+
+    # 全局价格均值 / 标准差（用于 z-score 异常判定）
+    price_row = spark.sql(
+        "SELECT AVG({actual}) AS mu, STDDEV_POP({actual}) AS sd FROM sales_advanced WHERE {actual} IS NOT NULL".format(
+            actual=q(config.COL_PRICE_ACTUAL)
+        )
+    ).collect()
+    mu = float(price_row[0]["mu"]) if price_row and price_row[0]["mu"] is not None else 0.0
+    sd = float(price_row[0]["sd"]) if price_row and price_row[0]["sd"] is not None else 0.0
+    results["price_baseline"] = {"mu": mu, "sd": sd}
+
+    # approval_no: 合法医疗器械批准文号一般以 "国械" 开头；其它视为疑似无效
+    # udi_match: 1=匹配, 0=不匹配（整型在 _prepare_advanced_df 里已转 double）
+    common_metrics = (
+        "AVG(CASE WHEN {udi} IS NULL OR {udi} = 0 THEN 1.0 ELSE 0.0 END)         AS udi_mismatch_rate,\n"
+        "AVG(CASE WHEN {ap} IS NULL OR {ap} IN ('未知','','nan','None')\n"
+        "         OR {ap} NOT LIKE '国械%' THEN 1.0 ELSE 0.0 END)               AS invalid_approval_rate,\n"
+        "AVG(CASE WHEN {rating} < 4.0 THEN 1.0 ELSE 0.0 END)                    AS low_rating_rate,\n"
+        "AVG(CASE WHEN {sd} > 0 AND ABS(({actual} - {mu_v}) / {sd_v}) > 3\n"
+        "         THEN 1.0 ELSE 0.0 END)                                       AS price_anomaly_rate,\n"
+        "AVG({rating})      AS avg_rating,\n"
+        "AVG({actual})      AS avg_actual_price,\n"
+        "SUM({sales})       AS total_sales,\n"
+        "COUNT(*)           AS project_count"
+    ).format(
+        udi=q("udi_match"),
+        ap=q(config.COL_APPROVAL_NO),
+        rating=q(config.COL_RATING),
+        actual=q(config.COL_PRICE_ACTUAL),
+        sales=q(config.COL_MONTHLY_SALES),
+        sd=str(sd),
+        sd_v=str(sd if sd and sd > 0 else 1.0),
+        mu_v=str(mu),
+    )
+
+    # 1) 机构合规画像 + 风险分（加权合成，归一化到 0-100）
+    sql_inst = (
+        "WITH base AS (\n"
+        "  SELECT {inst} AS institution,\n"
+        "         " + common_metrics + "\n"
+        "  FROM sales_advanced\n"
+        "  WHERE {inst} IS NOT NULL\n"
+        "  GROUP BY {inst}\n"
+        "  HAVING COUNT(*) >= 5\n"
+        ")\n"
+        "SELECT institution, project_count, total_sales,\n"
+        "       udi_mismatch_rate, invalid_approval_rate,\n"
+        "       low_rating_rate, price_anomaly_rate,\n"
+        "       avg_rating, avg_actual_price,\n"
+        "       100.0 * (0.40 * udi_mismatch_rate\n"
+        "              + 0.30 * invalid_approval_rate\n"
+        "              + 0.20 * low_rating_rate\n"
+        "              + 0.10 * price_anomaly_rate) AS risk_score,\n"
+        "       CASE\n"
+        "         WHEN 100.0 * (0.40 * udi_mismatch_rate + 0.30 * invalid_approval_rate\n"
+        "                     + 0.20 * low_rating_rate  + 0.10 * price_anomaly_rate) >= 30 THEN '高风险'\n"
+        "         WHEN 100.0 * (0.40 * udi_mismatch_rate + 0.30 * invalid_approval_rate\n"
+        "                     + 0.20 * low_rating_rate  + 0.10 * price_anomaly_rate) >= 15 THEN '中风险'\n"
+        "         ELSE '低风险'\n"
+        "       END AS risk_level,\n"
+        "       RANK() OVER (ORDER BY 100.0 * (0.40 * udi_mismatch_rate\n"
+        "                                   + 0.30 * invalid_approval_rate\n"
+        "                                   + 0.20 * low_rating_rate\n"
+        "                                   + 0.10 * price_anomaly_rate) DESC) AS risk_rank\n"
+        "FROM base\n"
+        "ORDER BY risk_score DESC\n"
+    ).format(inst=q(config.COL_INSTITUTION))
+    inst_df = spark.sql(sql_inst)
+    _write_spark_parquet(inst_df, os.path.join(warehouse_dir, "comp_institution_risk.parquet"))
+    # 全量落 Parquet，前端只取 Top-50 + Bottom-10
+    inst_rows = _collect_as_dicts(inst_df)
+    results["institution_risk_top"] = inst_rows[:50]
+    results["institution_risk_bottom"] = inst_rows[-10:] if len(inst_rows) >= 10 else []
+    results["institution_count_total"] = len(inst_rows)
+    if inst_rows:
+        # 风险等级分布
+        level_counter = {}
+        for r in inst_rows:
+            level_counter[r.get("risk_level")] = level_counter.get(r.get("risk_level"), 0) + 1
+        results["institution_risk_distribution"] = [
+            {"risk_level": k, "count": v} for k, v in level_counter.items()
+        ]
+
+    # 2) 品类合规画像
+    if config.COL_CATEGORY in df.columns:
+        sql_cat = (
+            "SELECT {cat} AS category,\n"
+            "       " + common_metrics + "\n"
+            "FROM sales_advanced\n"
+            "WHERE {cat} IS NOT NULL\n"
+            "GROUP BY {cat}\n"
+            "ORDER BY udi_mismatch_rate DESC\n"
+        ).format(cat=q(config.COL_CATEGORY))
+        cat_df = spark.sql(sql_cat)
+        _write_spark_parquet(cat_df, os.path.join(warehouse_dir, "comp_category_risk.parquet"))
+        results["category_risk"] = _collect_as_dicts(cat_df)
+
+    # 3) 城市合规画像
+    if config.COL_CITY in df.columns:
+        sql_city = (
+            "SELECT {city} AS city,\n"
+            "       " + common_metrics + "\n"
+            "FROM sales_advanced\n"
+            "WHERE {city} IS NOT NULL\n"
+            "GROUP BY {city}\n"
+            "ORDER BY udi_mismatch_rate DESC\n"
+        ).format(city=q(config.COL_CITY))
+        city_df = spark.sql(sql_city)
+        _write_spark_parquet(city_df, os.path.join(warehouse_dir, "comp_city_risk.parquet"))
+        results["city_risk"] = _collect_as_dicts(city_df)
+
+    out_path = os.path.join(output_dir, "compliance_analysis.json")
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(results, f, ensure_ascii=False, indent=2)
+    spark.stop()
+    return {"compliance_json": out_path, "warehouse_dir": warehouse_dir}
+
+
+def run_advanced_analysis(parquet_path=None, output_dir=None):
+    """
+    一次性跑三块高级分析，并汇总到 advanced_insights.json。
+    """
+    output_dir = output_dir or config.OUTPUT_DIR
+    config.ensure_dirs()
+
+    r1 = run_statistical_analysis(parquet_path, output_dir)
+    r2 = run_structure_analysis(parquet_path, output_dir)
+    r3 = run_compliance_analysis(parquet_path, output_dir)
+
+    insights = {}
+    for path_key, section in [
+        (r1["statistical_json"], "statistical"),
+        (r2["structure_json"], "structure"),
+        (r3["compliance_json"], "compliance"),
+    ]:
+        try:
+            with open(path_key, "r", encoding="utf-8") as f:
+                insights[section] = json.load(f)
+        except (OSError, json.JSONDecodeError):
+            insights[section] = {}
+
+    insights["_metadata"] = {
+        "generated_at": datetime.now().isoformat(timespec="seconds"),
+        "warehouse_dir": advanced_warehouse_dir(output_dir),
+    }
+
+    summary_path = os.path.join(output_dir, "advanced_insights.json")
+    with open(summary_path, "w", encoding="utf-8") as f:
+        json.dump(insights, f, ensure_ascii=False, indent=2)
+
+    return {
+        "statistical_json": r1["statistical_json"],
+        "structure_json": r2["structure_json"],
+        "compliance_json": r3["compliance_json"],
+        "advanced_insights_json": summary_path,
+    }
+
+
+def run(parquet_path=None, output_dir=None, k=None, use_clustered_data=True,
+        build_warehouse=True, build_advanced=True):
     """
     执行聚类与趋势分析。
 
@@ -908,11 +1516,14 @@ def run(parquet_path=None, output_dir=None, k=None, use_clustered_data=True, bui
         k:                  聚类数量（默认 config.KMEANS_K）
         use_clustered_data: 趋势分析时是否使用聚类后的数据（默认 True）
         build_warehouse:    是否额外派生聚类主题宽表（DWS 层，默认 True）
+        build_advanced:     是否跑高级分析（统计检验/结构/合规，默认 True）
     """
     run_clustering(parquet_path, k, output_dir)
     run_trend_analysis(parquet_path, output_dir, use_clustered_data)
     if build_warehouse:
         run_cluster_warehouse(output_dir=output_dir)
+    if build_advanced:
+        run_advanced_analysis(parquet_path, output_dir)
     return {"status": "ok"}
 
 

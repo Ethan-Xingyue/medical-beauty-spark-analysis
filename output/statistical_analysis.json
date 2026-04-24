@@ -1,0 +1,590 @@
+{
+  "pearson_matrix": [
+    {
+      "feature_a": "list_price",
+      "feature_b": "list_price",
+      "corr": 1.0
+    },
+    {
+      "feature_a": "actual_price",
+      "feature_b": "actual_price",
+      "corr": 1.0
+    },
+    {
+      "feature_a": "discount_rate",
+      "feature_b": "discount_rate",
+      "corr": 1.0
+    },
+    {
+      "feature_a": "monthly_sales",
+      "feature_b": "monthly_sales",
+      "corr": 1.0
+    },
+    {
+      "feature_a": "review_count",
+      "feature_b": "review_count",
+      "corr": 1.0
+    },
+    {
+      "feature_a": "rating",
+      "feature_b": "rating",
+      "corr": 1.0
+    },
+    {
+      "feature_a": "list_price",
+      "feature_b": "actual_price",
+      "corr": 0.9623924971671595
+    },
+    {
+      "feature_a": "actual_price",
+      "feature_b": "list_price",
+      "corr": 0.9623924971671595
+    },
+    {
+      "feature_a": "list_price",
+      "feature_b": "discount_rate",
+      "corr": -0.16812096650398764
+    },
+    {
+      "feature_a": "discount_rate",
+      "feature_b": "list_price",
+      "corr": -0.16812096650398764
+    },
+    {
+      "feature_a": "list_price",
+      "feature_b": "monthly_sales",
+      "corr": 0.0036314455264860523
+    },
+    {
+      "feature_a": "monthly_sales",
+      "feature_b": "list_price",
+      "corr": 0.0036314455264860523
+    },
+    {
+      "feature_a": "list_price",
+      "feature_b": "review_count",
+      "corr": 0.003494156752159734
+    },
+    {
+      "feature_a": "review_count",
+      "feature_b": "list_price",
+      "corr": 0.003494156752159734
+    },
+    {
+      "feature_a": "list_price",
+      "feature_b": "rating",
+      "corr": -0.0012084076279807296
+    },
+    {
+      "feature_a": "rating",
+      "feature_b": "list_price",
+      "corr": -0.0012084076279807296
+    },
+    {
+      "feature_a": "actual_price",
+      "feature_b": "discount_rate",
+      "corr": 0.014614470298468624
+    },
+    {
+      "feature_a": "discount_rate",
+      "feature_b": "actual_price",
+      "corr": 0.014614470298468624
+    },
+    {
+      "feature_a": "actual_price",
+      "feature_b": "monthly_sales",
+      "corr": 0.0038627903819458565
+    },
+    {
+      "feature_a": "monthly_sales",
+      "feature_b": "actual_price",
+      "corr": 0.0038627903819458565
+    },
+    {
+      "feature_a": "actual_price",
+      "feature_b": "review_count",
+      "corr": 0.004356210715689262
+    },
+    {
+      "feature_a": "review_count",
+      "feature_b": "actual_price",
+      "corr": 0.004356210715689262
+    },
+    {
+      "feature_a": "actual_price",
+      "feature_b": "rating",
+      "corr": -0.0011894405699129419
+    },
+    {
+      "feature_a": "rating",
+      "feature_b": "actual_price",
+      "corr": -0.0011894405699129419
+    },
+    {
+      "feature_a": "discount_rate",
+      "feature_b": "monthly_sales",
+      "corr": -0.0005421915817226071
+    },
+    {
+      "feature_a": "monthly_sales",
+      "feature_b": "discount_rate",
+      "corr": -0.0005421915817226071
+    },
+    {
+      "feature_a": "discount_rate",
+      "feature_b": "review_count",
+      "corr": 0.0033065798643692984
+    },
+    {
+      "feature_a": "review_count",
+      "feature_b": "discount_rate",
+      "corr": 0.0033065798643692984
+    },
+    {
+      "feature_a": "discount_rate",
+      "feature_b": "rating",
+      "corr": 0.0012264138709267957
+    },
+    {
+      "feature_a": "rating",
+      "feature_b": "discount_rate",
+      "corr": 0.0012264138709267957
+    },
+    {
+      "feature_a": "monthly_sales",
+      "feature_b": "review_count",
+      "corr": 0.6948472609934185
+    },
+    {
+      "feature_a": "review_count",
+      "feature_b": "monthly_sales",
+      "corr": 0.6948472609934185
+    },
+    {
+      "feature_a": "monthly_sales",
+      "feature_b": "rating",
+      "corr": -0.004075597987582871
+    },
+    {
+      "feature_a": "rating",
+      "feature_b": "monthly_sales",
+      "corr": -0.004075597987582871
+    },
+    {
+      "feature_a": "review_count",
+      "feature_b": "rating",
+      "corr": -0.004064316825291058
+    },
+    {
+      "feature_a": "rating",
+      "feature_b": "review_count",
+      "corr": -0.004064316825291058
+    }
+  ],
+  "features": [
+    "list_price",
+    "actual_price",
+    "discount_rate",
+    "monthly_sales",
+    "review_count",
+    "rating"
+  ],
+  "spearman_matrix": [
+    {
+      "feature_a": "list_price",
+      "feature_b": "list_price",
+      "corr": 1.0
+    },
+    {
+      "feature_a": "actual_price",
+      "feature_b": "actual_price",
+      "corr": 1.0
+    },
+    {
+      "feature_a": "discount_rate",
+      "feature_b": "discount_rate",
+      "corr": 1.0
+    },
+    {
+      "feature_a": "monthly_sales",
+      "feature_b": "monthly_sales",
+      "corr": 1.0
+    },
+    {
+      "feature_a": "review_count",
+      "feature_b": "review_count",
+      "corr": 1.0
+    },
+    {
+      "feature_a": "rating",
+      "feature_b": "rating",
+      "corr": 1.0
+    },
+    {
+      "feature_a": "list_price",
+      "feature_b": "actual_price",
+      "corr": 0.9818222945818651
+    },
+    {
+      "feature_a": "actual_price",
+      "feature_b": "list_price",
+      "corr": 0.9818222945818651
+    },
+    {
+      "feature_a": "list_price",
+      "feature_b": "discount_rate",
+      "corr": -0.09316239856579815
+    },
+    {
+      "feature_a": "discount_rate",
+      "feature_b": "list_price",
+      "corr": -0.09316239856579815
+    },
+    {
+      "feature_a": "list_price",
+      "feature_b": "monthly_sales",
+      "corr": -0.00030734662462639944
+    },
+    {
+      "feature_a": "monthly_sales",
+      "feature_b": "list_price",
+      "corr": -0.00030734662462639944
+    },
+    {
+      "feature_a": "list_price",
+      "feature_b": "review_count",
+      "corr": -0.0006033240718539
+    },
+    {
+      "feature_a": "review_count",
+      "feature_b": "list_price",
+      "corr": -0.0006033240718539
+    },
+    {
+      "feature_a": "list_price",
+      "feature_b": "rating",
+      "corr": -0.0015426943780161813
+    },
+    {
+      "feature_a": "rating",
+      "feature_b": "list_price",
+      "corr": -0.0015426943780161813
+    },
+    {
+      "feature_a": "actual_price",
+      "feature_b": "discount_rate",
+      "corr": 0.08466549833487608
+    },
+    {
+      "feature_a": "discount_rate",
+      "feature_b": "actual_price",
+      "corr": 0.08466549833487608
+    },
+    {
+      "feature_a": "actual_price",
+      "feature_b": "monthly_sales",
+      "corr": -0.00021813749868113586
+    },
+    {
+      "feature_a": "monthly_sales",
+      "feature_b": "actual_price",
+      "corr": -0.00021813749868113586
+    },
+    {
+      "feature_a": "actual_price",
+      "feature_b": "review_count",
+      "corr": 0.00011081510077983485
+    },
+    {
+      "feature_a": "review_count",
+      "feature_b": "actual_price",
+      "corr": 0.00011081510077983485
+    },
+    {
+      "feature_a": "actual_price",
+      "feature_b": "rating",
+      "corr": -0.0016189375842612182
+    },
+    {
+      "feature_a": "rating",
+      "feature_b": "actual_price",
+      "corr": -0.0016189375842612182
+    },
+    {
+      "feature_a": "discount_rate",
+      "feature_b": "monthly_sales",
+      "corr": -0.0004863497411373428
+    },
+    {
+      "feature_a": "monthly_sales",
+      "feature_b": "discount_rate",
+      "corr": -0.0004863497411373428
+    },
+    {
+      "feature_a": "discount_rate",
+      "feature_b": "review_count",
+      "corr": 0.0023488855624430203
+    },
+    {
+      "feature_a": "review_count",
+      "feature_b": "discount_rate",
+      "corr": 0.0023488855624430203
+    },
+    {
+      "feature_a": "discount_rate",
+      "feature_b": "rating",
+      "corr": -0.00024992275955682073
+    },
+    {
+      "feature_a": "rating",
+      "feature_b": "discount_rate",
+      "corr": -0.00024992275955682073
+    },
+    {
+      "feature_a": "monthly_sales",
+      "feature_b": "review_count",
+      "corr": 0.7128536589474398
+    },
+    {
+      "feature_a": "review_count",
+      "feature_b": "monthly_sales",
+      "corr": 0.7128536589474398
+    },
+    {
+      "feature_a": "monthly_sales",
+      "feature_b": "rating",
+      "corr": -0.004440312513303286
+    },
+    {
+      "feature_a": "rating",
+      "feature_b": "monthly_sales",
+      "corr": -0.004440312513303286
+    },
+    {
+      "feature_a": "review_count",
+      "feature_b": "rating",
+      "corr": -0.0032936738901234567
+    },
+    {
+      "feature_a": "rating",
+      "feature_b": "review_count",
+      "corr": -0.0032936738901234567
+    }
+  ],
+  "price_elasticity_by_category": [
+    {
+      "category": "皮肤管理",
+      "elasticity": -0.014380492211023202,
+      "intercept": 4.626116468429214,
+      "r2": 9.854618186652396e-05,
+      "n": 28881
+    },
+    {
+      "category": "注射",
+      "elasticity": 0.005974403735390087,
+      "intercept": 4.478741108013289,
+      "r2": 1.4632310174185552e-05,
+      "n": 29157
+    },
+    {
+      "category": "口腔",
+      "elasticity": 0.00661501947808368,
+      "intercept": 4.482193463125627,
+      "r2": 5.204186128429121e-05,
+      "n": 20113
+    },
+    {
+      "category": "光电",
+      "elasticity": 0.00776109234964902,
+      "intercept": 4.465716437606309,
+      "r2": 6.881031671734116e-05,
+      "n": 26803
+    },
+    {
+      "category": "外科",
+      "elasticity": 0.017277007058838854,
+      "intercept": 4.369463171407173,
+      "r2": 8.887145142447102e-05,
+      "n": 19351
+    }
+  ],
+  "rating_sales_corr_by_city": [
+    {
+      "city": "苏州",
+      "corr_rating_sales": 0.011221879346000782,
+      "n": 6236,
+      "avg_rating": 4.442766196279649,
+      "avg_sales": 119.7115137908916
+    },
+    {
+      "city": "成都",
+      "corr_rating_sales": 0.007565940997819047,
+      "n": 6207,
+      "avg_rating": 4.4457709038182625,
+      "avg_sales": 120.10617045271468
+    },
+    {
+      "city": "长沙",
+      "corr_rating_sales": 0.006075619198418879,
+      "n": 6307,
+      "avg_rating": 4.443294751863011,
+      "avg_sales": 119.28603139368956
+    },
+    {
+      "city": "武汉",
+      "corr_rating_sales": 0.0047598892099371915,
+      "n": 6292,
+      "avg_rating": 4.446492371265092,
+      "avg_sales": 120.17641449459632
+    },
+    {
+      "city": "南京",
+      "corr_rating_sales": 0.002806694520189231,
+      "n": 6185,
+      "avg_rating": 4.445569927243315,
+      "avg_sales": 117.73209377526273
+    },
+    {
+      "city": "东莞",
+      "corr_rating_sales": 0.001879506038947355,
+      "n": 6224,
+      "avg_rating": 4.447334511568118,
+      "avg_sales": 120.96802699228792
+    },
+    {
+      "city": "天津",
+      "corr_rating_sales": 0.0009020377100527492,
+      "n": 6202,
+      "avg_rating": 4.439853273137705,
+      "avg_sales": 119.23943889068043
+    },
+    {
+      "city": "上海",
+      "corr_rating_sales": -0.00018312355945622973,
+      "n": 6287,
+      "avg_rating": 4.442452680133598,
+      "avg_sales": 120.20216319389216
+    },
+    {
+      "city": "北京",
+      "corr_rating_sales": -0.0007615344759099937,
+      "n": 6408,
+      "avg_rating": 4.4401186017478205,
+      "avg_sales": 119.08348938826467
+    },
+    {
+      "city": "厦门",
+      "corr_rating_sales": -0.0012966112905028874,
+      "n": 6267,
+      "avg_rating": 4.44315621509494,
+      "avg_sales": 119.62486037976703
+    },
+    {
+      "city": "重庆",
+      "corr_rating_sales": -0.005822595039180607,
+      "n": 6252,
+      "avg_rating": 4.44548944337813,
+      "avg_sales": 121.08253358925144
+    },
+    {
+      "city": "深圳",
+      "corr_rating_sales": -0.006076490340767127,
+      "n": 6116,
+      "avg_rating": 4.451142903858728,
+      "avg_sales": 118.96729888816219
+    },
+    {
+      "city": "郑州",
+      "corr_rating_sales": -0.006275973988188294,
+      "n": 6293,
+      "avg_rating": 4.444589226124266,
+      "avg_sales": 119.58080406801207
+    },
+    {
+      "city": "合肥",
+      "corr_rating_sales": -0.007245575342678245,
+      "n": 6227,
+      "avg_rating": 4.444909266099244,
+      "avg_sales": 121.47631283121889
+    },
+    {
+      "city": "佛山",
+      "corr_rating_sales": -0.007593529151197315,
+      "n": 6153,
+      "avg_rating": 4.444493742889647,
+      "avg_sales": 120.92881521209166
+    },
+    {
+      "city": "广州",
+      "corr_rating_sales": -0.007678828937420092,
+      "n": 6139,
+      "avg_rating": 4.451369929956006,
+      "avg_sales": 120.34826518977032
+    },
+    {
+      "city": "杭州",
+      "corr_rating_sales": -0.015499049425551704,
+      "n": 6219,
+      "avg_rating": 4.441271908666984,
+      "avg_sales": 119.3603473227207
+    },
+    {
+      "city": "宁波",
+      "corr_rating_sales": -0.018552231808238704,
+      "n": 6154,
+      "avg_rating": 4.444016899577514,
+      "avg_sales": 119.74130646733832
+    },
+    {
+      "city": "青岛",
+      "corr_rating_sales": -0.019251575042174243,
+      "n": 6284,
+      "avg_rating": 4.451874602164221,
+      "avg_sales": 121.2310630171865
+    },
+    {
+      "city": "西安",
+      "corr_rating_sales": -0.02173378296889401,
+      "n": 6274,
+      "avg_rating": 4.445352247370097,
+      "avg_sales": 120.10870258208479
+    }
+  ],
+  "rating_sales_corr_by_category": [
+    {
+      "category": "外科",
+      "corr_rating_sales": 0.0017741410055677146,
+      "n": 19409,
+      "avg_rating": 4.443318563553034,
+      "avg_sales": 119.83198516152301
+    },
+    {
+      "category": "皮肤管理",
+      "corr_rating_sales": -0.001940170523880458,
+      "n": 28971,
+      "avg_rating": 4.445837216526856,
+      "avg_sales": 120.23941182561872
+    },
+    {
+      "category": "注射",
+      "corr_rating_sales": -0.002347349237050922,
+      "n": 29262,
+      "avg_rating": 4.444165812316328,
+      "avg_sales": 119.66427448568109
+    },
+    {
+      "category": "口腔",
+      "corr_rating_sales": -0.007923971968573322,
+      "n": 20186,
+      "avg_rating": 4.444514515010416,
+      "avg_sales": 119.95150104032498
+    },
+    {
+      "category": "光电",
+      "corr_rating_sales": -0.00964410820204201,
+      "n": 26898,
+      "avg_rating": 4.446822068555245,
+      "avg_sales": 120.0234589932337
+    }
+  ]
+}

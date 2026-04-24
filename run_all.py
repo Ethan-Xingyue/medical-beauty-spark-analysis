@@ -21,6 +21,7 @@ from src.analysis import (
     run_clustering,
     run_trend_analysis,
     run_cluster_warehouse,
+    run_advanced_analysis,
 )
 
 
@@ -52,6 +53,12 @@ def main():
     print("=" * 60)
     r4 = run_cluster_warehouse()
     print(r4)
+
+    print("\n" + "=" * 60)
+    print("5. 高级分析 —— 统计检验 / 结构分析 / 合规风险打分")
+    print("=" * 60)
+    r5 = run_advanced_analysis()
+    print(r5)
 
     print("\n" + "=" * 60)
     print("全流程完成。启动可视化看板请执行：")

@@ -1,0 +1,3108 @@
+{
+  "hhi_overall": {
+    "hhi": 6.775490088904193,
+    "cr10": 0.009422869622474947,
+    "cr5": 0.0048237964421668795,
+    "institution_count": 1500,
+    "total_sales": 14960623.0
+  },
+  "hhi_by_city": [
+    {
+      "city": "合肥",
+      "hhi": 136.37762058384865,
+      "cr10": 0.16481697652006191,
+      "institution_count": 75,
+      "total_sales": 756433.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "深圳",
+      "hhi": 136.27445063933553,
+      "cr10": 0.16677340971187624,
+      "institution_count": 75,
+      "total_sales": 727604.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "西安",
+      "hhi": 136.04874378087345,
+      "cr10": 0.167895939551092,
+      "institution_count": 75,
+      "total_sales": 753562.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "南京",
+      "hhi": 135.95008299617388,
+      "cr10": 0.16445679804112484,
+      "institution_count": 75,
+      "total_sales": 728173.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "宁波",
+      "hhi": 135.74255409276944,
+      "cr10": 0.16512007252119726,
+      "institution_count": 75,
+      "total_sales": 736888.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "武汉",
+      "hhi": 135.72668142479657,
+      "cr10": 0.1619572836077498,
+      "institution_count": 75,
+      "total_sales": 756150.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "重庆",
+      "hhi": 135.7097386697469,
+      "cr10": 0.1654196521040729,
+      "institution_count": 75,
+      "total_sales": 757008.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "佛山",
+      "hhi": 135.69325788954092,
+      "cr10": 0.16073514094681315,
+      "institution_count": 75,
+      "total_sales": 744075.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "东莞",
+      "hhi": 135.6331874556484,
+      "cr10": 0.16058201233887412,
+      "institution_count": 75,
+      "total_sales": 752905.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "苏州",
+      "hhi": 135.55230966866384,
+      "cr10": 0.1641561322454425,
+      "institution_count": 75,
+      "total_sales": 746521.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "北京",
+      "hhi": 135.47258753547789,
+      "cr10": 0.16346366796970724,
+      "institution_count": 75,
+      "total_sales": 763087.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "青岛",
+      "hhi": 135.44915918472455,
+      "cr10": 0.16083936278576455,
+      "institution_count": 75,
+      "total_sales": 761816.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "广州",
+      "hhi": 135.14172329312467,
+      "cr10": 0.1581241929676862,
+      "institution_count": 75,
+      "total_sales": 738818.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "长沙",
+      "hhi": 135.12053600162773,
+      "cr10": 0.1565375622892401,
+      "institution_count": 75,
+      "total_sales": 752337.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "天津",
+      "hhi": 135.1002025379286,
+      "cr10": 0.157947758217121,
+      "institution_count": 75,
+      "total_sales": 739523.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "上海",
+      "hhi": 135.09382962293,
+      "cr10": 0.15976345454810106,
+      "institution_count": 75,
+      "total_sales": 755711.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "杭州",
+      "hhi": 134.99235245229193,
+      "cr10": 0.15552564859046586,
+      "institution_count": 75,
+      "total_sales": 742302.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "郑州",
+      "hhi": 134.96409350632575,
+      "cr10": 0.15960995160274383,
+      "institution_count": 75,
+      "total_sales": 752522.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "成都",
+      "hhi": 134.9485550156033,
+      "cr10": 0.1573241546937018,
+      "institution_count": 75,
+      "total_sales": 745499.0,
+      "concentration_level": "竞争充分"
+    },
+    {
+      "city": "厦门",
+      "hhi": 134.76606543078194,
+      "cr10": 0.15847771542599665,
+      "institution_count": 75,
+      "total_sales": 749689.0,
+      "concentration_level": "竞争充分"
+    }
+  ],
+  "hhi_by_category": [
+    {
+      "category": "外科",
+      "hhi": 7.381136018437484,
+      "cr10": 0.014240575040448117,
+      "institution_count": 1500
+    },
+    {
+      "category": "口腔",
+      "hhi": 7.32901009325026,
+      "cr10": 0.013193102499813118,
+      "institution_count": 1500
+    },
+    {
+      "category": "皮肤管理",
+      "hhi": 7.153623903839732,
+      "cr10": 0.01212560170129894,
+      "institution_count": 1500
+    },
+    {
+      "category": "光电",
+      "hhi": 7.152971616732449,
+      "cr10": 0.011669280455806005,
+      "institution_count": 1500
+    },
+    {
+      "category": "注射",
+      "hhi": 7.116550571051546,
+      "cr10": 0.011601786146739105,
+      "institution_count": 1500
+    }
+  ],
+  "pareto_projects": [
+    {
+      "project_name": "贴面修复四联",
+      "total_sales": 591684.0,
+      "rn": 1,
+      "cum_sales": 591684.0,
+      "cum_share": 0.039549422507338096,
+      "project_share": 0.022222222222222223
+    },
+    {
+      "project_name": "冷光美白单次",
+      "total_sales": 583615.0,
+      "rn": 2,
+      "cum_sales": 1175299.0,
+      "cum_share": 0.0785594958177878,
+      "project_share": 0.044444444444444446
+    },
+    {
+      "project_name": "冷光美白3次卡",
+      "total_sales": 578311.0,
+      "rn": 3,
+      "cum_sales": 1753610.0,
+      "cum_share": 0.11721503843790462,
+      "project_share": 0.06666666666666667
+    },
+    {
+      "project_name": "贴面修复单颗",
+      "total_sales": 573921.0,
+      "rn": 4,
+      "cum_sales": 2327531.0,
+      "cum_share": 0.15557714408016296,
+      "project_share": 0.08888888888888889
+    },
+    {
+      "project_name": "祛痘护理单次",
+      "total_sales": 451680.0,
+      "rn": 5,
+      "cum_sales": 2779211.0,
+      "cum_share": 0.1857684001528546,
+      "project_share": 0.1111111111111111
+    },
+    {
+      "project_name": "肉毒毒素100U",
+      "total_sales": 445546.0,
+      "rn": 6,
+      "cum_sales": 3224757.0,
+      "cum_share": 0.2155496465621786,
+      "project_share": 0.13333333333333333
+    },
+    {
+      "project_name": "修复补水三次卡",
+      "total_sales": 443557.0,
+      "rn": 7,
+      "cum_sales": 3668314.0,
+      "cum_share": 0.24519794396262776,
+      "project_share": 0.15555555555555556
+    },
+    {
+      "project_name": "祛痘护理5次卡",
+      "total_sales": 442054.0,
+      "rn": 8,
+      "cum_sales": 4110368.0,
+      "cum_share": 0.2747457776323887,
+      "project_share": 0.17777777777777778
+    },
+    {
+      "project_name": "肉毒毒素50U",
+      "total_sales": 441507.0,
+      "rn": 9,
+      "cum_sales": 4551875.0,
+      "cum_share": 0.30425704865365566,
+      "project_share": 0.2
+    },
+    {
+      "project_name": "双眼皮切开",
+      "total_sales": 439189.0,
+      "rn": 10,
+      "cum_sales": 4991064.0,
+      "cum_share": 0.33361337960324244,
+      "project_share": 0.2222222222222222
+    },
+    {
+      "project_name": "童颜针1vial",
+      "total_sales": 437595.0,
+      "rn": 11,
+      "cum_sales": 5428659.0,
+      "cum_share": 0.36286316418774806,
+      "project_share": 0.24444444444444444
+    },
+    {
+      "project_name": "嗨体1支",
+      "total_sales": 436131.0,
+      "rn": 12,
+      "cum_sales": 5864790.0,
+      "cum_share": 0.3920150918848767,
+      "project_share": 0.26666666666666666
+    },
+    {
+      "project_name": "童颜针2vials",
+      "total_sales": 435883.0,
+      "rn": 13,
+      "cum_sales": 6300673.0,
+      "cum_share": 0.4211504427322311,
+      "project_share": 0.28888888888888886
+    },
+    {
+      "project_name": "深层清洁单次",
+      "total_sales": 433156.0,
+      "rn": 14,
+      "cum_sales": 6733829.0,
+      "cum_share": 0.45010351507420515,
+      "project_share": 0.3111111111111111
+    },
+    {
+      "project_name": "修复补水单次",
+      "total_sales": 432223.0,
+      "rn": 15,
+      "cum_sales": 7166052.0,
+      "cum_share": 0.4789942237031172,
+      "project_share": 0.3333333333333333
+    },
+    {
+      "project_name": "深层清洁三次卡",
+      "total_sales": 427846.0,
+      "rn": 16,
+      "cum_sales": 7593898.0,
+      "cum_share": 0.5075923643019412,
+      "project_share": 0.35555555555555557
+    },
+    {
+      "project_name": "嗨体2支",
+      "total_sales": 427686.0,
+      "rn": 17,
+      "cum_sales": 8021584.0,
+      "cum_share": 0.5361798101589753,
+      "project_share": 0.37777777777777777
+    },
+    {
+      "project_name": "双眼皮埋线",
+      "total_sales": 417639.0,
+      "rn": 18,
+      "cum_sales": 8439223.0,
+      "cum_share": 0.5640956930737443,
+      "project_share": 0.4
+    },
+    {
+      "project_name": "吸脂大腿围",
+      "total_sales": 397007.0,
+      "rn": 19,
+      "cum_sales": 8836230.0,
+      "cum_share": 0.5906324890347147,
+      "project_share": 0.4222222222222222
+    },
+    {
+      "project_name": "吸脂腹部",
+      "total_sales": 396266.0,
+      "rn": 20,
+      "cum_sales": 9232496.0,
+      "cum_share": 0.6171197549727708,
+      "project_share": 0.4444444444444444
+    },
+    {
+      "project_name": "光子嫩肤单次",
+      "total_sales": 300808.0,
+      "rn": 21,
+      "cum_sales": 9533304.0,
+      "cum_share": 0.6372264042747418,
+      "project_share": 0.4666666666666667
+    },
+    {
+      "project_name": "玻尿酸2ml",
+      "total_sales": 298628.0,
+      "rn": 22,
+      "cum_sales": 9831932.0,
+      "cum_share": 0.6571873377198263,
+      "project_share": 0.4888888888888889
+    },
+    {
+      "project_name": "皮秒激光全脸",
+      "total_sales": 295993.0,
+      "rn": 23,
+      "cum_sales": 10127925.0,
+      "cum_share": 0.6769721421360595,
+      "project_share": 0.5111111111111111
+    },
+    {
+      "project_name": "超声炮6线",
+      "total_sales": 294176.0,
+      "rn": 24,
+      "cum_sales": 10422101.0,
+      "cum_share": 0.6966354943908418,
+      "project_share": 0.5333333333333333
+    },
+    {
+      "project_name": "超声炮2线",
+      "total_sales": 292197.0,
+      "rn": 25,
+      "cum_sales": 10714298.0,
+      "cum_share": 0.7161665660581114,
+      "project_share": 0.5555555555555556
+    },
+    {
+      "project_name": "皮秒激光全身局部",
+      "total_sales": 292168.0,
+      "rn": 26,
+      "cum_sales": 11006466.0,
+      "cum_share": 0.7356956993034314,
+      "project_share": 0.5777777777777777
+    },
+    {
+      "project_name": "玻尿酸1ml",
+      "total_sales": 290339.0,
+      "rn": 27,
+      "cum_sales": 11296805.0,
+      "cum_share": 0.7551025782816665,
+      "project_share": 0.6
+    },
+    {
+      "project_name": "超声炮4线",
+      "total_sales": 289374.0,
+      "rn": 28,
+      "cum_sales": 11586179.0,
+      "cum_share": 0.7744449545984816,
+      "project_share": 0.6222222222222222
+    },
+    {
+      "project_name": "光子嫩肤10次卡",
+      "total_sales": 289083.0,
+      "rn": 29,
+      "cum_sales": 11875262.0,
+      "cum_share": 0.7937678798536665,
+      "project_share": 0.6444444444444445
+    },
+    {
+      "project_name": "玻尿酸3ml套组",
+      "total_sales": 288301.0,
+      "rn": 30,
+      "cum_sales": 12163563.0,
+      "cum_share": 0.8130385345583536,
+      "project_share": 0.6666666666666666
+    },
+    {
+      "project_name": "水光针基础",
+      "total_sales": 288074.0,
+      "rn": 31,
+      "cum_sales": 12451637.0,
+      "cum_share": 0.8322940160981264,
+      "project_share": 0.6888888888888889
+    },
+    {
+      "project_name": "皮秒激光面颈",
+      "total_sales": 287766.0,
+      "rn": 32,
+      "cum_sales": 12739403.0,
+      "cum_share": 0.8515289102599537,
+      "project_share": 0.7111111111111111
+    },
+    {
+      "project_name": "光子嫩肤5次卡",
+      "total_sales": 284664.0,
+      "rn": 33,
+      "cum_sales": 13024067.0,
+      "cum_share": 0.8705564601153307,
+      "project_share": 0.7333333333333333
+    },
+    {
+      "project_name": "水光针复合",
+      "total_sales": 284624.0,
+      "rn": 34,
+      "cum_sales": 13308691.0,
+      "cum_share": 0.8895813362852603,
+      "project_share": 0.7555555555555555
+    },
+    {
+      "project_name": "水光针贵妇",
+      "total_sales": 280242.0,
+      "rn": 35,
+      "cum_sales": 13588933.0,
+      "cum_share": 0.9083133102144209,
+      "project_share": 0.7777777777777778
+    },
+    {
+      "project_name": "脂肪填充一次",
+      "total_sales": 222435.0,
+      "rn": 36,
+      "cum_sales": 13811368.0,
+      "cum_share": 0.9231813407770518,
+      "project_share": 0.8
+    },
+    {
+      "project_name": "脂肪填充二次加强",
+      "total_sales": 214429.0,
+      "rn": 37,
+      "cum_sales": 14025797.0,
+      "cum_share": 0.9375142331973741,
+      "project_share": 0.8222222222222222
+    },
+    {
+      "project_name": "热玛吉1800发",
+      "total_sales": 207117.0,
+      "rn": 38,
+      "cum_sales": 14232914.0,
+      "cum_share": 0.9513583759179013,
+      "project_share": 0.8444444444444444
+    },
+    {
+      "project_name": "热玛吉900发",
+      "total_sales": 202487.0,
+      "rn": 39,
+      "cum_sales": 14435401.0,
+      "cum_share": 0.9648930395478852,
+      "project_share": 0.8666666666666667
+    },
+    {
+      "project_name": "热玛吉1200发",
+      "total_sales": 192558.0,
+      "rn": 40,
+      "cum_sales": 14627959.0,
+      "cum_share": 0.9777640276076738,
+      "project_share": 0.8888888888888888
+    },
+    {
+      "project_name": "隆鼻硅胶",
+      "total_sales": 121896.0,
+      "rn": 41,
+      "cum_sales": 14749855.0,
+      "cum_share": 0.9859118166402562,
+      "project_share": 0.9111111111111111
+    },
+    {
+      "project_name": "隆鼻膨体",
+      "total_sales": 116958.0,
+      "rn": 42,
+      "cum_sales": 14866813.0,
+      "cum_share": 0.99372953920435,
+      "project_share": 0.9333333333333333
+    },
+    {
+      "project_name": "隐形矫正中度",
+      "total_sales": 35958.0,
+      "rn": 43,
+      "cum_sales": 14902771.0,
+      "cum_share": 0.996133048737342,
+      "project_share": 0.9555555555555556
+    },
+    {
+      "project_name": "隐形矫正重度",
+      "total_sales": 29765.0,
+      "rn": 44,
+      "cum_sales": 14932536.0,
+      "cum_share": 0.9981226049209314,
+      "project_share": 0.9777777777777777
+    },
+    {
+      "project_name": "隐形矫正轻度",
+      "total_sales": 28087.0,
+      "rn": 45,
+      "cum_sales": 14960623.0,
+      "cum_share": 1.0,
+      "project_share": 1.0
+    }
+  ],
+  "pareto_breakpoints": [
+    {
+      "cum_share_threshold": 0.5,
+      "project_share": 0.35555555555555557,
+      "rn": 16
+    },
+    {
+      "cum_share_threshold": 0.8,
+      "project_share": 0.6666666666666666,
+      "rn": 30
+    },
+    {
+      "cum_share_threshold": 0.95,
+      "project_share": 0.8444444444444444,
+      "rn": 38
+    }
+  ],
+  "city_similarity_matrix": [
+    {
+      "city_a": "上海",
+      "city_b": "上海",
+      "similarity": 0.9999999999999999
+    },
+    {
+      "city_a": "上海",
+      "city_b": "东莞",
+      "similarity": 0.9988393294604174
+    },
+    {
+      "city_a": "上海",
+      "city_b": "佛山",
+      "similarity": 0.999628682080548
+    },
+    {
+      "city_a": "上海",
+      "city_b": "北京",
+      "similarity": 0.999524848101963
+    },
+    {
+      "city_a": "上海",
+      "city_b": "南京",
+      "similarity": 0.9992918967123507
+    },
+    {
+      "city_a": "上海",
+      "city_b": "厦门",
+      "similarity": 0.998257381393705
+    },
+    {
+      "city_a": "上海",
+      "city_b": "合肥",
+      "similarity": 0.9989601942676439
+    },
+    {
+      "city_a": "上海",
+      "city_b": "天津",
+      "similarity": 0.9987727738219766
+    },
+    {
+      "city_a": "上海",
+      "city_b": "宁波",
+      "similarity": 0.9991120052036804
+    },
+    {
+      "city_a": "上海",
+      "city_b": "广州",
+      "similarity": 0.999336403040234
+    },
+    {
+      "city_a": "上海",
+      "city_b": "成都",
+      "similarity": 0.9987882310473306
+    },
+    {
+      "city_a": "上海",
+      "city_b": "杭州",
+      "similarity": 0.998799376118723
+    },
+    {
+      "city_a": "上海",
+      "city_b": "武汉",
+      "similarity": 0.9988275931460477
+    },
+    {
+      "city_a": "上海",
+      "city_b": "深圳",
+      "similarity": 0.9994152602697267
+    },
+    {
+      "city_a": "上海",
+      "city_b": "苏州",
+      "similarity": 0.9993551821111413
+    },
+    {
+      "city_a": "上海",
+      "city_b": "西安",
+      "similarity": 0.9989974675234525
+    },
+    {
+      "city_a": "上海",
+      "city_b": "郑州",
+      "similarity": 0.9995870898015511
+    },
+    {
+      "city_a": "上海",
+      "city_b": "重庆",
+      "similarity": 0.9999241971425262
+    },
+    {
+      "city_a": "上海",
+      "city_b": "长沙",
+      "similarity": 0.9995730775526996
+    },
+    {
+      "city_a": "上海",
+      "city_b": "青岛",
+      "similarity": 0.9983962633959829
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "上海",
+      "similarity": 0.9988393294604174
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "东莞",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "佛山",
+      "similarity": 0.9985626079434928
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "北京",
+      "similarity": 0.9985433947686025
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "南京",
+      "similarity": 0.9977481348792746
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "厦门",
+      "similarity": 0.9973421801258134
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "合肥",
+      "similarity": 0.9993472069759632
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "天津",
+      "similarity": 0.9972119938139009
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "宁波",
+      "similarity": 0.9980610244081909
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "广州",
+      "similarity": 0.9975362989249219
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "成都",
+      "similarity": 0.9991117177594602
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "杭州",
+      "similarity": 0.9989358847979195
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "武汉",
+      "similarity": 0.9989316247829867
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "深圳",
+      "similarity": 0.9971518206565632
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "苏州",
+      "similarity": 0.9974296408868579
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "西安",
+      "similarity": 0.9992053415287621
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "郑州",
+      "similarity": 0.9993468327364955
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "重庆",
+      "similarity": 0.9984716467246109
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "长沙",
+      "similarity": 0.9986920859081454
+    },
+    {
+      "city_a": "东莞",
+      "city_b": "青岛",
+      "similarity": 0.9981658847076946
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "上海",
+      "similarity": 0.999628682080548
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "东莞",
+      "similarity": 0.9985626079434928
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "佛山",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "北京",
+      "similarity": 0.9999731519718117
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "南京",
+      "similarity": 0.9997925911882386
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "厦门",
+      "similarity": 0.9988651104173216
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "合肥",
+      "similarity": 0.9995186644511904
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "天津",
+      "similarity": 0.9984215846700983
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "宁波",
+      "similarity": 0.9993182913524252
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "广州",
+      "similarity": 0.9997670013050679
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "成都",
+      "similarity": 0.9992242435491612
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "杭州",
+      "similarity": 0.9995513261423783
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "武汉",
+      "similarity": 0.9992473473561496
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "深圳",
+      "similarity": 0.9994883329431978
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "苏州",
+      "similarity": 0.9991888362228034
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "西安",
+      "similarity": 0.9992497033906856
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "郑州",
+      "similarity": 0.9997028201229705
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "重庆",
+      "similarity": 0.9996586576375723
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "长沙",
+      "similarity": 0.9998492188224937
+    },
+    {
+      "city_a": "佛山",
+      "city_b": "青岛",
+      "similarity": 0.9991709684215959
+    },
+    {
+      "city_a": "北京",
+      "city_b": "上海",
+      "similarity": 0.999524848101963
+    },
+    {
+      "city_a": "北京",
+      "city_b": "东莞",
+      "similarity": 0.9985433947686025
+    },
+    {
+      "city_a": "北京",
+      "city_b": "佛山",
+      "similarity": 0.9999731519718117
+    },
+    {
+      "city_a": "北京",
+      "city_b": "北京",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "北京",
+      "city_b": "南京",
+      "similarity": 0.999867506118818
+    },
+    {
+      "city_a": "北京",
+      "city_b": "厦门",
+      "similarity": 0.9987636089949284
+    },
+    {
+      "city_a": "北京",
+      "city_b": "合肥",
+      "similarity": 0.9995327254719162
+    },
+    {
+      "city_a": "北京",
+      "city_b": "天津",
+      "similarity": 0.9982363071704345
+    },
+    {
+      "city_a": "北京",
+      "city_b": "宁波",
+      "similarity": 0.9993306829579773
+    },
+    {
+      "city_a": "北京",
+      "city_b": "广州",
+      "similarity": 0.9997804839300553
+    },
+    {
+      "city_a": "北京",
+      "city_b": "成都",
+      "similarity": 0.9993755759653103
+    },
+    {
+      "city_a": "北京",
+      "city_b": "杭州",
+      "similarity": 0.9995913477215621
+    },
+    {
+      "city_a": "北京",
+      "city_b": "武汉",
+      "similarity": 0.9991167443293734
+    },
+    {
+      "city_a": "北京",
+      "city_b": "深圳",
+      "similarity": 0.9995103700858856
+    },
+    {
+      "city_a": "北京",
+      "city_b": "苏州",
+      "similarity": 0.9989088153783795
+    },
+    {
+      "city_a": "北京",
+      "city_b": "西安",
+      "similarity": 0.9992451076150572
+    },
+    {
+      "city_a": "北京",
+      "city_b": "郑州",
+      "similarity": 0.9996785601960207
+    },
+    {
+      "city_a": "北京",
+      "city_b": "重庆",
+      "similarity": 0.9995278383715392
+    },
+    {
+      "city_a": "北京",
+      "city_b": "长沙",
+      "similarity": 0.9997525403667656
+    },
+    {
+      "city_a": "北京",
+      "city_b": "青岛",
+      "similarity": 0.9990079168613315
+    },
+    {
+      "city_a": "南京",
+      "city_b": "上海",
+      "similarity": 0.9992918967123507
+    },
+    {
+      "city_a": "南京",
+      "city_b": "东莞",
+      "similarity": 0.9977481348792746
+    },
+    {
+      "city_a": "南京",
+      "city_b": "佛山",
+      "similarity": 0.9997925911882386
+    },
+    {
+      "city_a": "南京",
+      "city_b": "北京",
+      "similarity": 0.999867506118818
+    },
+    {
+      "city_a": "南京",
+      "city_b": "南京",
+      "similarity": 1.0000000000000002
+    },
+    {
+      "city_a": "南京",
+      "city_b": "厦门",
+      "similarity": 0.9986848920056006
+    },
+    {
+      "city_a": "南京",
+      "city_b": "合肥",
+      "similarity": 0.9990023029812846
+    },
+    {
+      "city_a": "南京",
+      "city_b": "天津",
+      "similarity": 0.9982859074779908
+    },
+    {
+      "city_a": "南京",
+      "city_b": "宁波",
+      "similarity": 0.9994165684386642
+    },
+    {
+      "city_a": "南京",
+      "city_b": "广州",
+      "similarity": 0.999940067916857
+    },
+    {
+      "city_a": "南京",
+      "city_b": "成都",
+      "similarity": 0.9991481177889298
+    },
+    {
+      "city_a": "南京",
+      "city_b": "杭州",
+      "similarity": 0.9992046805261063
+    },
+    {
+      "city_a": "南京",
+      "city_b": "武汉",
+      "similarity": 0.9985671115693886
+    },
+    {
+      "city_a": "南京",
+      "city_b": "深圳",
+      "similarity": 0.9997698853513839
+    },
+    {
+      "city_a": "南京",
+      "city_b": "苏州",
+      "similarity": 0.9985447921663804
+    },
+    {
+      "city_a": "南京",
+      "city_b": "西安",
+      "similarity": 0.9988910549622299
+    },
+    {
+      "city_a": "南京",
+      "city_b": "郑州",
+      "similarity": 0.9993508410438541
+    },
+    {
+      "city_a": "南京",
+      "city_b": "重庆",
+      "similarity": 0.9993901384370831
+    },
+    {
+      "city_a": "南京",
+      "city_b": "长沙",
+      "similarity": 0.9993460410984385
+    },
+    {
+      "city_a": "南京",
+      "city_b": "青岛",
+      "similarity": 0.9984625990690784
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "上海",
+      "similarity": 0.998257381393705
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "东莞",
+      "similarity": 0.9973421801258134
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "佛山",
+      "similarity": 0.9988651104173216
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "北京",
+      "similarity": 0.9987636089949284
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "南京",
+      "similarity": 0.9986848920056006
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "厦门",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "合肥",
+      "similarity": 0.9987571475506305
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "天津",
+      "similarity": 0.9993029905574062
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "宁波",
+      "similarity": 0.9995632472269145
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "广州",
+      "similarity": 0.9990039951241994
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "成都",
+      "similarity": 0.9987032518081811
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "杭州",
+      "similarity": 0.9991108130063635
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "武汉",
+      "similarity": 0.9994405698473389
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "深圳",
+      "similarity": 0.997990727392208
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "苏州",
+      "similarity": 0.9975156183394723
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "西安",
+      "similarity": 0.9993766414745302
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "郑州",
+      "similarity": 0.9991309867945289
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "重庆",
+      "similarity": 0.9987610791140304
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "长沙",
+      "similarity": 0.9982765440673453
+    },
+    {
+      "city_a": "厦门",
+      "city_b": "青岛",
+      "similarity": 0.9993384042529869
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "上海",
+      "similarity": 0.9989601942676439
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "东莞",
+      "similarity": 0.9993472069759632
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "佛山",
+      "similarity": 0.9995186644511904
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "北京",
+      "similarity": 0.9995327254719162
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "南京",
+      "similarity": 0.9990023029812846
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "厦门",
+      "similarity": 0.9987571475506305
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "合肥",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "天津",
+      "similarity": 0.9977438437526598
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "宁波",
+      "similarity": 0.9989309377016549
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "广州",
+      "similarity": 0.9988573857765659
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "成都",
+      "similarity": 0.999617886791373
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "杭州",
+      "similarity": 0.9999312829248679
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "武汉",
+      "similarity": 0.999666228623993
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "深圳",
+      "similarity": 0.9981535912655501
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "苏州",
+      "similarity": 0.9981124440963998
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "西安",
+      "similarity": 0.9996530719058475
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "郑州",
+      "similarity": 0.999743571821579
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "重庆",
+      "similarity": 0.9988799888431661
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "长沙",
+      "similarity": 0.9994505118027508
+    },
+    {
+      "city_a": "合肥",
+      "city_b": "青岛",
+      "similarity": 0.9994532432149253
+    },
+    {
+      "city_a": "天津",
+      "city_b": "上海",
+      "similarity": 0.9987727738219766
+    },
+    {
+      "city_a": "天津",
+      "city_b": "东莞",
+      "similarity": 0.9972119938139009
+    },
+    {
+      "city_a": "天津",
+      "city_b": "佛山",
+      "similarity": 0.9984215846700983
+    },
+    {
+      "city_a": "天津",
+      "city_b": "北京",
+      "similarity": 0.9982363071704345
+    },
+    {
+      "city_a": "天津",
+      "city_b": "南京",
+      "similarity": 0.9982859074779908
+    },
+    {
+      "city_a": "天津",
+      "city_b": "厦门",
+      "similarity": 0.9993029905574062
+    },
+    {
+      "city_a": "天津",
+      "city_b": "合肥",
+      "similarity": 0.9977438437526598
+    },
+    {
+      "city_a": "天津",
+      "city_b": "天津",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "天津",
+      "city_b": "宁波",
+      "similarity": 0.9994921318745937
+    },
+    {
+      "city_a": "天津",
+      "city_b": "广州",
+      "similarity": 0.9987386455332343
+    },
+    {
+      "city_a": "天津",
+      "city_b": "成都",
+      "similarity": 0.9980248254220375
+    },
+    {
+      "city_a": "天津",
+      "city_b": "杭州",
+      "similarity": 0.9979461361075443
+    },
+    {
+      "city_a": "天津",
+      "city_b": "武汉",
+      "similarity": 0.9986332420142234
+    },
+    {
+      "city_a": "天津",
+      "city_b": "深圳",
+      "similarity": 0.9982893484756319
+    },
+    {
+      "city_a": "天津",
+      "city_b": "苏州",
+      "similarity": 0.9977571482707754
+    },
+    {
+      "city_a": "天津",
+      "city_b": "西安",
+      "similarity": 0.9988872668482167
+    },
+    {
+      "city_a": "天津",
+      "city_b": "郑州",
+      "similarity": 0.9988724378692823
+    },
+    {
+      "city_a": "天津",
+      "city_b": "重庆",
+      "similarity": 0.999219372715433
+    },
+    {
+      "city_a": "天津",
+      "city_b": "长沙",
+      "similarity": 0.997814852505791
+    },
+    {
+      "city_a": "天津",
+      "city_b": "青岛",
+      "similarity": 0.9980954560757698
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "上海",
+      "similarity": 0.9991120052036804
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "东莞",
+      "similarity": 0.9980610244081909
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "佛山",
+      "similarity": 0.9993182913524252
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "北京",
+      "similarity": 0.9993306829579773
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "南京",
+      "similarity": 0.9994165684386642
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "厦门",
+      "similarity": 0.9995632472269145
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "合肥",
+      "similarity": 0.9989309377016549
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "天津",
+      "similarity": 0.9994921318745937
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "宁波",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "广州",
+      "similarity": 0.9995609943867063
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "成都",
+      "similarity": 0.9993729648375804
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "杭州",
+      "similarity": 0.9991836695653069
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "武汉",
+      "similarity": 0.999112498201465
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "深圳",
+      "similarity": 0.9990620948774296
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "苏州",
+      "similarity": 0.9978037558058165
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "西安",
+      "similarity": 0.9995828049379493
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "郑州",
+      "similarity": 0.9995776816517737
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "重庆",
+      "similarity": 0.9993908651413633
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "长沙",
+      "similarity": 0.9986440868602264
+    },
+    {
+      "city_a": "宁波",
+      "city_b": "青岛",
+      "similarity": 0.9986738080674139
+    },
+    {
+      "city_a": "广州",
+      "city_b": "上海",
+      "similarity": 0.999336403040234
+    },
+    {
+      "city_a": "广州",
+      "city_b": "东莞",
+      "similarity": 0.9975362989249219
+    },
+    {
+      "city_a": "广州",
+      "city_b": "佛山",
+      "similarity": 0.9997670013050679
+    },
+    {
+      "city_a": "广州",
+      "city_b": "北京",
+      "similarity": 0.9997804839300553
+    },
+    {
+      "city_a": "广州",
+      "city_b": "南京",
+      "similarity": 0.999940067916857
+    },
+    {
+      "city_a": "广州",
+      "city_b": "厦门",
+      "similarity": 0.9990039951241994
+    },
+    {
+      "city_a": "广州",
+      "city_b": "合肥",
+      "similarity": 0.9988573857765659
+    },
+    {
+      "city_a": "广州",
+      "city_b": "天津",
+      "similarity": 0.9987386455332343
+    },
+    {
+      "city_a": "广州",
+      "city_b": "宁波",
+      "similarity": 0.9995609943867063
+    },
+    {
+      "city_a": "广州",
+      "city_b": "广州",
+      "similarity": 1.0000000000000002
+    },
+    {
+      "city_a": "广州",
+      "city_b": "成都",
+      "similarity": 0.9989477292298305
+    },
+    {
+      "city_a": "广州",
+      "city_b": "杭州",
+      "similarity": 0.999098149357695
+    },
+    {
+      "city_a": "广州",
+      "city_b": "武汉",
+      "similarity": 0.9986939480329386
+    },
+    {
+      "city_a": "广州",
+      "city_b": "深圳",
+      "similarity": 0.9997815670859251
+    },
+    {
+      "city_a": "广州",
+      "city_b": "苏州",
+      "similarity": 0.9987356449563713
+    },
+    {
+      "city_a": "广州",
+      "city_b": "西安",
+      "similarity": 0.9989151881290552
+    },
+    {
+      "city_a": "广州",
+      "city_b": "郑州",
+      "similarity": 0.9993398363740853
+    },
+    {
+      "city_a": "广州",
+      "city_b": "重庆",
+      "similarity": 0.999541392804522
+    },
+    {
+      "city_a": "广州",
+      "city_b": "长沙",
+      "similarity": 0.9992989876446727
+    },
+    {
+      "city_a": "广州",
+      "city_b": "青岛",
+      "similarity": 0.998621909050621
+    },
+    {
+      "city_a": "成都",
+      "city_b": "上海",
+      "similarity": 0.9987882310473306
+    },
+    {
+      "city_a": "成都",
+      "city_b": "东莞",
+      "similarity": 0.9991117177594602
+    },
+    {
+      "city_a": "成都",
+      "city_b": "佛山",
+      "similarity": 0.9992242435491612
+    },
+    {
+      "city_a": "成都",
+      "city_b": "北京",
+      "similarity": 0.9993755759653103
+    },
+    {
+      "city_a": "成都",
+      "city_b": "南京",
+      "similarity": 0.9991481177889298
+    },
+    {
+      "city_a": "成都",
+      "city_b": "厦门",
+      "similarity": 0.9987032518081811
+    },
+    {
+      "city_a": "成都",
+      "city_b": "合肥",
+      "similarity": 0.999617886791373
+    },
+    {
+      "city_a": "成都",
+      "city_b": "天津",
+      "similarity": 0.9980248254220375
+    },
+    {
+      "city_a": "成都",
+      "city_b": "宁波",
+      "similarity": 0.9993729648375804
+    },
+    {
+      "city_a": "成都",
+      "city_b": "广州",
+      "similarity": 0.9989477292298305
+    },
+    {
+      "city_a": "成都",
+      "city_b": "成都",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "成都",
+      "city_b": "杭州",
+      "similarity": 0.9996770979645023
+    },
+    {
+      "city_a": "成都",
+      "city_b": "武汉",
+      "similarity": 0.9991258208556428
+    },
+    {
+      "city_a": "成都",
+      "city_b": "深圳",
+      "similarity": 0.9983668851898866
+    },
+    {
+      "city_a": "成都",
+      "city_b": "苏州",
+      "similarity": 0.9970782363753579
+    },
+    {
+      "city_a": "成都",
+      "city_b": "西安",
+      "similarity": 0.9997287051103656
+    },
+    {
+      "city_a": "成都",
+      "city_b": "郑州",
+      "similarity": 0.9996774708896143
+    },
+    {
+      "city_a": "成都",
+      "city_b": "重庆",
+      "similarity": 0.998727503970182
+    },
+    {
+      "city_a": "成都",
+      "city_b": "长沙",
+      "similarity": 0.9987448514949704
+    },
+    {
+      "city_a": "成都",
+      "city_b": "青岛",
+      "similarity": 0.9985784996497478
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "上海",
+      "similarity": 0.998799376118723
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "东莞",
+      "similarity": 0.9989358847979195
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "佛山",
+      "similarity": 0.9995513261423783
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "北京",
+      "similarity": 0.9995913477215621
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "南京",
+      "similarity": 0.9992046805261063
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "厦门",
+      "similarity": 0.9991108130063635
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "合肥",
+      "similarity": 0.9999312829248679
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "天津",
+      "similarity": 0.9979461361075443
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "宁波",
+      "similarity": 0.9991836695653069
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "广州",
+      "similarity": 0.999098149357695
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "成都",
+      "similarity": 0.9996770979645023
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "杭州",
+      "similarity": 1.0000000000000002
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "武汉",
+      "similarity": 0.9996663621412628
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "深圳",
+      "similarity": 0.9982983474549475
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "苏州",
+      "similarity": 0.997923534283077
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "西安",
+      "similarity": 0.9996920051132329
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "郑州",
+      "similarity": 0.999703678796882
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "重庆",
+      "similarity": 0.9988354287792451
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "长沙",
+      "similarity": 0.9993205629313695
+    },
+    {
+      "city_a": "杭州",
+      "city_b": "青岛",
+      "similarity": 0.9995310934730726
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "上海",
+      "similarity": 0.9988275931460477
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "东莞",
+      "similarity": 0.9989316247829867
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "佛山",
+      "similarity": 0.9992473473561496
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "北京",
+      "similarity": 0.9991167443293734
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "南京",
+      "similarity": 0.9985671115693886
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "厦门",
+      "similarity": 0.9994405698473389
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "合肥",
+      "similarity": 0.999666228623993
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "天津",
+      "similarity": 0.9986332420142234
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "宁波",
+      "similarity": 0.999112498201465
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "广州",
+      "similarity": 0.9986939480329386
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "成都",
+      "similarity": 0.9991258208556428
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "杭州",
+      "similarity": 0.9996663621412628
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "武汉",
+      "similarity": 1.0000000000000002
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "深圳",
+      "similarity": 0.9977681397751078
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "苏州",
+      "similarity": 0.9982417917453792
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "西安",
+      "similarity": 0.9997283584623768
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "郑州",
+      "similarity": 0.9996420871296325
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "重庆",
+      "similarity": 0.9989864357285823
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "长沙",
+      "similarity": 0.9991465175001781
+    },
+    {
+      "city_a": "武汉",
+      "city_b": "青岛",
+      "similarity": 0.9998296398486368
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "上海",
+      "similarity": 0.9994152602697267
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "东莞",
+      "similarity": 0.9971518206565632
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "佛山",
+      "similarity": 0.9994883329431978
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "北京",
+      "similarity": 0.9995103700858856
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "南京",
+      "similarity": 0.9997698853513839
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "厦门",
+      "similarity": 0.997990727392208
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "合肥",
+      "similarity": 0.9981535912655501
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "天津",
+      "similarity": 0.9982893484756319
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "宁波",
+      "similarity": 0.9990620948774296
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "广州",
+      "similarity": 0.9997815670859251
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "成都",
+      "similarity": 0.9983668851898866
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "杭州",
+      "similarity": 0.9982983474549475
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "武汉",
+      "similarity": 0.9977681397751078
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "深圳",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "苏州",
+      "similarity": 0.998798295121845
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "西安",
+      "similarity": 0.9981638788454588
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "郑州",
+      "similarity": 0.9988882221197456
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "重庆",
+      "similarity": 0.9994944214220267
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "长沙",
+      "similarity": 0.9990758026625346
+    },
+    {
+      "city_a": "深圳",
+      "city_b": "青岛",
+      "similarity": 0.9975764600988627
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "上海",
+      "similarity": 0.9993551821111413
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "东莞",
+      "similarity": 0.9974296408868579
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "佛山",
+      "similarity": 0.9991888362228034
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "北京",
+      "similarity": 0.9989088153783795
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "南京",
+      "similarity": 0.9985447921663804
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "厦门",
+      "similarity": 0.9975156183394723
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "合肥",
+      "similarity": 0.9981124440963998
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "天津",
+      "similarity": 0.9977571482707754
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "宁波",
+      "similarity": 0.9978037558058165
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "广州",
+      "similarity": 0.9987356449563713
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "成都",
+      "similarity": 0.9970782363753579
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "杭州",
+      "similarity": 0.997923534283077
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "武汉",
+      "similarity": 0.9982417917453792
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "深圳",
+      "similarity": 0.998798295121845
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "苏州",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "西安",
+      "similarity": 0.9976508794283765
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "郑州",
+      "similarity": 0.9985487358809455
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "重庆",
+      "similarity": 0.9993772004238904
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "长沙",
+      "similarity": 0.9995211895747587
+    },
+    {
+      "city_a": "苏州",
+      "city_b": "青岛",
+      "similarity": 0.9983617061436656
+    },
+    {
+      "city_a": "西安",
+      "city_b": "上海",
+      "similarity": 0.9989974675234525
+    },
+    {
+      "city_a": "西安",
+      "city_b": "东莞",
+      "similarity": 0.9992053415287621
+    },
+    {
+      "city_a": "西安",
+      "city_b": "佛山",
+      "similarity": 0.9992497033906856
+    },
+    {
+      "city_a": "西安",
+      "city_b": "北京",
+      "similarity": 0.9992451076150572
+    },
+    {
+      "city_a": "西安",
+      "city_b": "南京",
+      "similarity": 0.9988910549622299
+    },
+    {
+      "city_a": "西安",
+      "city_b": "厦门",
+      "similarity": 0.9993766414745302
+    },
+    {
+      "city_a": "西安",
+      "city_b": "合肥",
+      "similarity": 0.9996530719058475
+    },
+    {
+      "city_a": "西安",
+      "city_b": "天津",
+      "similarity": 0.9988872668482167
+    },
+    {
+      "city_a": "西安",
+      "city_b": "宁波",
+      "similarity": 0.9995828049379493
+    },
+    {
+      "city_a": "西安",
+      "city_b": "广州",
+      "similarity": 0.9989151881290552
+    },
+    {
+      "city_a": "西安",
+      "city_b": "成都",
+      "similarity": 0.9997287051103656
+    },
+    {
+      "city_a": "西安",
+      "city_b": "杭州",
+      "similarity": 0.9996920051132329
+    },
+    {
+      "city_a": "西安",
+      "city_b": "武汉",
+      "similarity": 0.9997283584623768
+    },
+    {
+      "city_a": "西安",
+      "city_b": "深圳",
+      "similarity": 0.9981638788454588
+    },
+    {
+      "city_a": "西安",
+      "city_b": "苏州",
+      "similarity": 0.9976508794283765
+    },
+    {
+      "city_a": "西安",
+      "city_b": "西安",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "西安",
+      "city_b": "郑州",
+      "similarity": 0.9998498443588675
+    },
+    {
+      "city_a": "西安",
+      "city_b": "重庆",
+      "similarity": 0.9990881752865847
+    },
+    {
+      "city_a": "西安",
+      "city_b": "长沙",
+      "similarity": 0.9988747847253735
+    },
+    {
+      "city_a": "西安",
+      "city_b": "青岛",
+      "similarity": 0.9992329080329478
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "上海",
+      "similarity": 0.9995870898015511
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "东莞",
+      "similarity": 0.9993468327364955
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "佛山",
+      "similarity": 0.9997028201229705
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "北京",
+      "similarity": 0.9996785601960207
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "南京",
+      "similarity": 0.9993508410438541
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "厦门",
+      "similarity": 0.9991309867945289
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "合肥",
+      "similarity": 0.999743571821579
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "天津",
+      "similarity": 0.9988724378692823
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "宁波",
+      "similarity": 0.9995776816517737
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "广州",
+      "similarity": 0.9993398363740853
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "成都",
+      "similarity": 0.9996774708896143
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "杭州",
+      "similarity": 0.999703678796882
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "武汉",
+      "similarity": 0.9996420871296325
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "深圳",
+      "similarity": 0.9988882221197456
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "苏州",
+      "similarity": 0.9985487358809455
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "西安",
+      "similarity": 0.9998498443588675
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "郑州",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "重庆",
+      "similarity": 0.9995870899491154
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "长沙",
+      "similarity": 0.9994772890399275
+    },
+    {
+      "city_a": "郑州",
+      "city_b": "青岛",
+      "similarity": 0.9992214141151026
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "上海",
+      "similarity": 0.9999241971425262
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "东莞",
+      "similarity": 0.9984716467246109
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "佛山",
+      "similarity": 0.9996586576375723
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "北京",
+      "similarity": 0.9995278383715392
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "南京",
+      "similarity": 0.9993901384370831
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "厦门",
+      "similarity": 0.9987610791140304
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "合肥",
+      "similarity": 0.9988799888431661
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "天津",
+      "similarity": 0.999219372715433
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "宁波",
+      "similarity": 0.9993908651413633
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "广州",
+      "similarity": 0.999541392804522
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "成都",
+      "similarity": 0.998727503970182
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "杭州",
+      "similarity": 0.9988354287792451
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "武汉",
+      "similarity": 0.9989864357285823
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "深圳",
+      "similarity": 0.9994944214220267
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "苏州",
+      "similarity": 0.9993772004238904
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "西安",
+      "similarity": 0.9990881752865847
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "郑州",
+      "similarity": 0.9995870899491154
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "重庆",
+      "similarity": 1.0000000000000002
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "长沙",
+      "similarity": 0.999491048337668
+    },
+    {
+      "city_a": "重庆",
+      "city_b": "青岛",
+      "similarity": 0.9986417395527661
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "上海",
+      "similarity": 0.9995730775526996
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "东莞",
+      "similarity": 0.9986920859081454
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "佛山",
+      "similarity": 0.9998492188224937
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "北京",
+      "similarity": 0.9997525403667656
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "南京",
+      "similarity": 0.9993460410984385
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "厦门",
+      "similarity": 0.9982765440673453
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "合肥",
+      "similarity": 0.9994505118027508
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "天津",
+      "similarity": 0.997814852505791
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "宁波",
+      "similarity": 0.9986440868602264
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "广州",
+      "similarity": 0.9992989876446727
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "成都",
+      "similarity": 0.9987448514949704
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "杭州",
+      "similarity": 0.9993205629313695
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "武汉",
+      "similarity": 0.9991465175001781
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "深圳",
+      "similarity": 0.9990758026625346
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "苏州",
+      "similarity": 0.9995211895747587
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "西安",
+      "similarity": 0.9988747847253735
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "郑州",
+      "similarity": 0.9994772890399275
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "重庆",
+      "similarity": 0.999491048337668
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "长沙",
+      "similarity": 1.0
+    },
+    {
+      "city_a": "长沙",
+      "city_b": "青岛",
+      "similarity": 0.9991552144971523
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "上海",
+      "similarity": 0.9983962633959829
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "东莞",
+      "similarity": 0.9981658847076946
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "佛山",
+      "similarity": 0.9991709684215959
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "北京",
+      "similarity": 0.9990079168613315
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "南京",
+      "similarity": 0.9984625990690784
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "厦门",
+      "similarity": 0.9993384042529869
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "合肥",
+      "similarity": 0.9994532432149253
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "天津",
+      "similarity": 0.9980954560757698
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "宁波",
+      "similarity": 0.9986738080674139
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "广州",
+      "similarity": 0.998621909050621
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "成都",
+      "similarity": 0.9985784996497478
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "杭州",
+      "similarity": 0.9995310934730726
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "武汉",
+      "similarity": 0.9998296398486368
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "深圳",
+      "similarity": 0.9975764600988627
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "苏州",
+      "similarity": 0.9983617061436656
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "西安",
+      "similarity": 0.9992329080329478
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "郑州",
+      "similarity": 0.9992214141151026
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "重庆",
+      "similarity": 0.9986417395527661
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "长沙",
+      "similarity": 0.9991552144971523
+    },
+    {
+      "city_a": "青岛",
+      "city_b": "青岛",
+      "similarity": 1.0
+    }
+  ],
+  "city_similarity_top": [
+    {
+      "city": "上海",
+      "top_similar": [
+        {
+          "city": "重庆",
+          "similarity": 0.9999241971425262
+        },
+        {
+          "city": "佛山",
+          "similarity": 0.999628682080548
+        },
+        {
+          "city": "郑州",
+          "similarity": 0.9995870898015511
+        },
+        {
+          "city": "长沙",
+          "similarity": 0.9995730775526996
+        },
+        {
+          "city": "北京",
+          "similarity": 0.999524848101963
+        }
+      ]
+    },
+    {
+      "city": "东莞",
+      "top_similar": [
+        {
+          "city": "合肥",
+          "similarity": 0.9993472069759632
+        },
+        {
+          "city": "郑州",
+          "similarity": 0.9993468327364955
+        },
+        {
+          "city": "西安",
+          "similarity": 0.9992053415287621
+        },
+        {
+          "city": "成都",
+          "similarity": 0.9991117177594602
+        },
+        {
+          "city": "杭州",
+          "similarity": 0.9989358847979195
+        }
+      ]
+    },
+    {
+      "city": "佛山",
+      "top_similar": [
+        {
+          "city": "北京",
+          "similarity": 0.9999731519718117
+        },
+        {
+          "city": "长沙",
+          "similarity": 0.9998492188224937
+        },
+        {
+          "city": "南京",
+          "similarity": 0.9997925911882386
+        },
+        {
+          "city": "广州",
+          "similarity": 0.9997670013050679
+        },
+        {
+          "city": "郑州",
+          "similarity": 0.9997028201229705
+        }
+      ]
+    },
+    {
+      "city": "北京",
+      "top_similar": [
+        {
+          "city": "佛山",
+          "similarity": 0.9999731519718117
+        },
+        {
+          "city": "南京",
+          "similarity": 0.999867506118818
+        },
+        {
+          "city": "广州",
+          "similarity": 0.9997804839300553
+        },
+        {
+          "city": "长沙",
+          "similarity": 0.9997525403667656
+        },
+        {
+          "city": "郑州",
+          "similarity": 0.9996785601960207
+        }
+      ]
+    },
+    {
+      "city": "南京",
+      "top_similar": [
+        {
+          "city": "广州",
+          "similarity": 0.999940067916857
+        },
+        {
+          "city": "北京",
+          "similarity": 0.999867506118818
+        },
+        {
+          "city": "佛山",
+          "similarity": 0.9997925911882386
+        },
+        {
+          "city": "深圳",
+          "similarity": 0.9997698853513839
+        },
+        {
+          "city": "宁波",
+          "similarity": 0.9994165684386642
+        }
+      ]
+    },
+    {
+      "city": "厦门",
+      "top_similar": [
+        {
+          "city": "宁波",
+          "similarity": 0.9995632472269145
+        },
+        {
+          "city": "武汉",
+          "similarity": 0.9994405698473389
+        },
+        {
+          "city": "西安",
+          "similarity": 0.9993766414745302
+        },
+        {
+          "city": "青岛",
+          "similarity": 0.9993384042529869
+        },
+        {
+          "city": "天津",
+          "similarity": 0.9993029905574062
+        }
+      ]
+    },
+    {
+      "city": "合肥",
+      "top_similar": [
+        {
+          "city": "杭州",
+          "similarity": 0.9999312829248679
+        },
+        {
+          "city": "郑州",
+          "similarity": 0.999743571821579
+        },
+        {
+          "city": "武汉",
+          "similarity": 0.999666228623993
+        },
+        {
+          "city": "西安",
+          "similarity": 0.9996530719058475
+        },
+        {
+          "city": "成都",
+          "similarity": 0.999617886791373
+        }
+      ]
+    },
+    {
+      "city": "天津",
+      "top_similar": [
+        {
+          "city": "宁波",
+          "similarity": 0.9994921318745937
+        },
+        {
+          "city": "厦门",
+          "similarity": 0.9993029905574062
+        },
+        {
+          "city": "重庆",
+          "similarity": 0.999219372715433
+        },
+        {
+          "city": "西安",
+          "similarity": 0.9988872668482167
+        },
+        {
+          "city": "郑州",
+          "similarity": 0.9988724378692823
+        }
+      ]
+    },
+    {
+      "city": "宁波",
+      "top_similar": [
+        {
+          "city": "西安",
+          "similarity": 0.9995828049379493
+        },
+        {
+          "city": "郑州",
+          "similarity": 0.9995776816517737
+        },
+        {
+          "city": "厦门",
+          "similarity": 0.9995632472269145
+        },
+        {
+          "city": "广州",
+          "similarity": 0.9995609943867063
+        },
+        {
+          "city": "天津",
+          "similarity": 0.9994921318745937
+        }
+      ]
+    },
+    {
+      "city": "广州",
+      "top_similar": [
+        {
+          "city": "南京",
+          "similarity": 0.999940067916857
+        },
+        {
+          "city": "深圳",
+          "similarity": 0.9997815670859251
+        },
+        {
+          "city": "北京",
+          "similarity": 0.9997804839300553
+        },
+        {
+          "city": "佛山",
+          "similarity": 0.9997670013050679
+        },
+        {
+          "city": "宁波",
+          "similarity": 0.9995609943867063
+        }
+      ]
+    },
+    {
+      "city": "成都",
+      "top_similar": [
+        {
+          "city": "西安",
+          "similarity": 0.9997287051103656
+        },
+        {
+          "city": "郑州",
+          "similarity": 0.9996774708896143
+        },
+        {
+          "city": "杭州",
+          "similarity": 0.9996770979645023
+        },
+        {
+          "city": "合肥",
+          "similarity": 0.999617886791373
+        },
+        {
+          "city": "北京",
+          "similarity": 0.9993755759653103
+        }
+      ]
+    },
+    {
+      "city": "杭州",
+      "top_similar": [
+        {
+          "city": "合肥",
+          "similarity": 0.9999312829248679
+        },
+        {
+          "city": "郑州",
+          "similarity": 0.999703678796882
+        },
+        {
+          "city": "西安",
+          "similarity": 0.9996920051132329
+        },
+        {
+          "city": "成都",
+          "similarity": 0.9996770979645023
+        },
+        {
+          "city": "武汉",
+          "similarity": 0.9996663621412628
+        }
+      ]
+    },
+    {
+      "city": "武汉",
+      "top_similar": [
+        {
+          "city": "青岛",
+          "similarity": 0.9998296398486368
+        },
+        {
+          "city": "西安",
+          "similarity": 0.9997283584623768
+        },
+        {
+          "city": "杭州",
+          "similarity": 0.9996663621412628
+        },
+        {
+          "city": "合肥",
+          "similarity": 0.999666228623993
+        },
+        {
+          "city": "郑州",
+          "similarity": 0.9996420871296325
+        }
+      ]
+    },
+    {
+      "city": "深圳",
+      "top_similar": [
+        {
+          "city": "广州",
+          "similarity": 0.9997815670859251
+        },
+        {
+          "city": "南京",
+          "similarity": 0.9997698853513839
+        },
+        {
+          "city": "北京",
+          "similarity": 0.9995103700858856
+        },
+        {
+          "city": "重庆",
+          "similarity": 0.9994944214220267
+        },
+        {
+          "city": "佛山",
+          "similarity": 0.9994883329431978
+        }
+      ]
+    },
+    {
+      "city": "苏州",
+      "top_similar": [
+        {
+          "city": "长沙",
+          "similarity": 0.9995211895747587
+        },
+        {
+          "city": "重庆",
+          "similarity": 0.9993772004238904
+        },
+        {
+          "city": "上海",
+          "similarity": 0.9993551821111413
+        },
+        {
+          "city": "佛山",
+          "similarity": 0.9991888362228034
+        },
+        {
+          "city": "北京",
+          "similarity": 0.9989088153783795
+        }
+      ]
+    },
+    {
+      "city": "西安",
+      "top_similar": [
+        {
+          "city": "郑州",
+          "similarity": 0.9998498443588675
+        },
+        {
+          "city": "成都",
+          "similarity": 0.9997287051103656
+        },
+        {
+          "city": "武汉",
+          "similarity": 0.9997283584623768
+        },
+        {
+          "city": "杭州",
+          "similarity": 0.9996920051132329
+        },
+        {
+          "city": "合肥",
+          "similarity": 0.9996530719058475
+        }
+      ]
+    },
+    {
+      "city": "郑州",
+      "top_similar": [
+        {
+          "city": "西安",
+          "similarity": 0.9998498443588675
+        },
+        {
+          "city": "合肥",
+          "similarity": 0.999743571821579
+        },
+        {
+          "city": "杭州",
+          "similarity": 0.999703678796882
+        },
+        {
+          "city": "佛山",
+          "similarity": 0.9997028201229705
+        },
+        {
+          "city": "北京",
+          "similarity": 0.9996785601960207
+        }
+      ]
+    },
+    {
+      "city": "重庆",
+      "top_similar": [
+        {
+          "city": "上海",
+          "similarity": 0.9999241971425262
+        },
+        {
+          "city": "佛山",
+          "similarity": 0.9996586576375723
+        },
+        {
+          "city": "郑州",
+          "similarity": 0.9995870899491154
+        },
+        {
+          "city": "广州",
+          "similarity": 0.999541392804522
+        },
+        {
+          "city": "北京",
+          "similarity": 0.9995278383715392
+        }
+      ]
+    },
+    {
+      "city": "长沙",
+      "top_similar": [
+        {
+          "city": "佛山",
+          "similarity": 0.9998492188224937
+        },
+        {
+          "city": "北京",
+          "similarity": 0.9997525403667656
+        },
+        {
+          "city": "上海",
+          "similarity": 0.9995730775526996
+        },
+        {
+          "city": "苏州",
+          "similarity": 0.9995211895747587
+        },
+        {
+          "city": "重庆",
+          "similarity": 0.999491048337668
+        }
+      ]
+    },
+    {
+      "city": "青岛",
+      "top_similar": [
+        {
+          "city": "武汉",
+          "similarity": 0.9998296398486368
+        },
+        {
+          "city": "杭州",
+          "similarity": 0.9995310934730726
+        },
+        {
+          "city": "合肥",
+          "similarity": 0.9994532432149253
+        },
+        {
+          "city": "厦门",
+          "similarity": 0.9993384042529869
+        },
+        {
+          "city": "西安",
+          "similarity": 0.9992329080329478
+        }
+      ]
+    }
+  ],
+  "city_similarity_cities": [
+    "上海",
+    "东莞",
+    "佛山",
+    "北京",
+    "南京",
+    "厦门",
+    "合肥",
+    "天津",
+    "宁波",
+    "广州",
+    "成都",
+    "杭州",
+    "武汉",
+    "深圳",
+    "苏州",
+    "西安",
+    "郑州",
+    "重庆",
+    "长沙",
+    "青岛"
+  ]
+}

@@ -21,6 +21,7 @@
         <button type="button" class="nav-item" data-panel="channel">渠道分析</button>
         <button type="button" class="nav-item" data-panel="cluster">聚类分析</button>
         <button type="button" class="nav-item" data-panel="cluster_deep">聚类深度分析</button>
+        <button type="button" class="nav-item" data-panel="advanced">高级分析</button>
         <button type="button" class="nav-item" data-panel="about">关于系统</button>
       </nav>
       <div class="sidebar-footer" style="text-align:center;">
@@ -289,6 +290,83 @@
           </div>
 
           <div class="deep-meta" id="deepMeta"></div>
+        </section>
+
+        <!-- 高级分析：统计检验 & 结构 & 合规 -->
+        <section id="panel-advanced" class="panel">
+          <h3 class="panel-title">高级分析（统计检验 / 结构 / 合规风险）</h3>
+          <p class="panel-desc">
+            GROUP BY 之外的"量化关系"分析层，数据来自 <code>output/advanced_tables/*.parquet</code>，通过
+            <code>/api/advanced_insights</code>、<code>/api/statistical</code>、<code>/api/structure</code>、
+            <code>/api/compliance</code> 读取。覆盖：Pearson/Spearman 相关矩阵、分品类价格弹性、评分-销量分层相关、
+            机构集中度（HHI / CR10）、项目帕累托 20/80、城市相似度以及机构合规风险打分。
+          </p>
+
+          <div class="toolbar">
+            <button type="button" class="primary" id="btnAdvRefresh">刷新</button>
+            <button type="button" id="btnExportPearson">导出 Pearson 相关矩阵 CSV</button>
+            <button type="button" id="btnExportElasticity">导出价格弹性 CSV</button>
+            <button type="button" id="btnExportHHICity">导出 HHI(城市) CSV</button>
+            <button type="button" id="btnExportInstRisk">导出机构风险 CSV</button>
+          </div>
+
+          <h4 class="sub-title">一、Pearson 相关矩阵（6 个数值特征两两相关）</h4>
+          <div class="overview-charts">
+            <div class="chart-box" id="chartAdvPearson"></div>
+            <div class="chart-box" id="chartAdvElasticity"></div>
+          </div>
+
+          <h4 class="sub-title">二、评分-销量分层相关（按城市 / 按品类）</h4>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>城市</th><th>相关系数</th><th>样本数</th><th>平均评分</th><th>平均销量</th></tr></thead>
+              <tbody id="tbodyAdvRatingCity"></tbody>
+            </table>
+          </div>
+          <div class="table-wrap" style="margin-top:10px;">
+            <table class="data-table">
+              <thead><tr><th>品类</th><th>相关系数</th><th>样本数</th><th>平均评分</th><th>平均销量</th></tr></thead>
+              <tbody id="tbodyAdvRatingCat"></tbody>
+            </table>
+          </div>
+
+          <h4 class="sub-title">三、机构集中度（HHI 指数 + CR10）</h4>
+          <div class="overview-charts">
+            <div class="chart-box" id="chartAdvHHICity"></div>
+            <div class="chart-box" id="chartAdvPareto"></div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>城市</th><th>HHI</th><th>CR10</th><th>机构数</th><th>销量合计</th><th>集中度等级</th></tr></thead>
+              <tbody id="tbodyAdvHHICity"></tbody>
+            </table>
+          </div>
+
+          <h4 class="sub-title">四、城市消费结构相似度（余弦相似度 Top-5）</h4>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>城市</th><th>最相似城市（Top-5）</th></tr></thead>
+              <tbody id="tbodyAdvCitySim"></tbody>
+            </table>
+          </div>
+
+          <h4 class="sub-title">五、合规风险打分（机构 TOP-20）</h4>
+          <div class="overview-charts">
+            <div class="chart-box" id="chartAdvRiskDist"></div>
+            <div class="chart-box" id="chartAdvCompCategory"></div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr>
+                <th>排名</th><th>机构</th><th>风险分</th><th>等级</th>
+                <th>UDI不匹配率</th><th>疑似无效文号率</th><th>低评分率</th><th>价格异常率</th>
+                <th>项目数</th><th>平均评分</th>
+              </tr></thead>
+              <tbody id="tbodyAdvInstRisk"></tbody>
+            </table>
+          </div>
+
+          <div class="deep-meta" id="advMeta"></div>
         </section>
 
         <!-- 关于系统 -->
